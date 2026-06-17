@@ -1,0 +1,31 @@
+# To ensure all is installed and only them:
+# (venv)$ pip freeze | xargs pip uninstall -y
+# (venv)$ pip install -r requirements.txt
+
+SQLAlchemy==1.4.31
+psycopg2-binary==2.9.3
+# pgvector for similarity search and SQLA/PG column type wrapper
+pgvector==0.2.4
+# Image processing libs.
+# Machine learning with no GPU
+scikit-learn==1.0
+# Machine learning with GPU. NOT automatically regression-tested so to upgrade with caution.
+tensorflow==2.6.0
+# Workaround https://github.com/tensorflow/tensorflow/issues/51592
+keras==2.6.0
+tensorflow-hub==0.12.0
+tensorflow_addons==0.14.0
+protobuf==4.23.2
+# Used same place as TF, CNN generation
+pandas==1.3.3
+##lycon==0.2.0 # Conflicts with the version required by TF
+opencv-python-headless==4.5.3.56
+imgaug==0.4.0
+# imgaug needs opencv, but not the headless one, so at docker startup:
+#   File "/venv/lib/python3.8/site-packages/cv2/__init__.py", line 8, in <module>
+#     from .cv2 import *
+# ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+# https://github.com/aleju/imgaug/issues/737
+--no-binary=imgaug
+# QA
+mypy==0.921
