@@ -10,41 +10,19 @@
 # Here is just the job registering part, the rest is in GPU_Prediction class.
 #
 from pathlib import Path
-from typing import cast, List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, cast
 
-ProjectFiltersDict = Dict[str, Any]
-
-
-class PredictionReq:
-    def __init__(self, **kwargs):
-        self.project_id: int = kwargs.get("project_id", 0)
-        self.source_project_ids: List[int] = kwargs.get("source_project_ids", [])
-        self.learning_limit: Optional[int] = kwargs.get("learning_limit")
-        self.features: List[str] = kwargs.get("features", [])
-        self.categories: List[int] = kwargs.get("categories", [])
-        self.use_scn: bool = kwargs.get("use_scn", False)
-        self.pre_mapping: Dict[int, int] = kwargs.get("pre_mapping", {})
-
-    def dict(self):
-        return self.__dict__
-
-
-class PredictionRsp:
-    def __init__(
-        self, job_id: int = 0, errors: List[str] = None, warnings: List[str] = None
-    ):
-        self.job_id = job_id
-        self.errors = errors or []
-        self.warnings = warnings or []
-
+from API_models.filters import ProjectFiltersDict
+from API_models.prediction import PredictionReq
 
 # from BO.Rights import RightsBO, Action
 from FS.MachineLearningModels import SavedModels
 from FS.Vault import Vault
-from helpers.DynamicLogs import get_logger, LogsSwitcher
+from helpers.DynamicLogs import LogsSwitcher, get_logger
 
 # TODO: Move somewhere else
-from .helpers.JobService import JobServiceBase, ArgsDict
+from .helpers.JobService import ArgsDict, JobServiceBase
+
 # from .helpers.Service import Service
 
 logger = get_logger(__name__)
@@ -63,18 +41,19 @@ class PredictForProject(JobServiceBase):
         self.vault = Vault(self.config.vault_dir())
         self.models_dir = SavedModels(self.config)
 
+    # Job is submitted in Web app, not here
     # def run(self, current_user_id: UserIDT) -> PredictionRsp:
-        """
-        Initial creation, do security and consistency checks, then create the job.
-        """
-        # _user, _project = RightsBO.user_wants(
-        #     self.session, current_user_id, Action.ANNOTATE, self.req.project_id
-        # )
-        # TODO: more checks, e.g. deep features models consistency
-        # Security OK, create pending job
-        # self.create_job(self.JOB_TYPE, current_user_id)
-        # ret = PredictionRsp(job_id=self.job_id)
-        # return ret
+    #     """
+    #     Initial creation, do security and consistency checks, then create the job.
+    #     """
+    #     _user, _project = RightsBO.user_wants(
+    #         self.session, current_user_id, Action.ANNOTATE, self.req.project_id
+    #     )
+    #     # TODO: more checks, e.g. deep features models consistency
+    #     # Security OK, create pending job
+    #     self.create_job(self.JOB_TYPE, current_user_id)
+    #     ret = PredictionRsp(job_id=self.job_id)
+    #     return ret
 
     def init_args(self, args: ArgsDict) -> ArgsDict:
         args["req"] = self.req.dict()

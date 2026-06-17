@@ -2,27 +2,28 @@
 # This file is part of Ecotaxa, see license.md in the application root directory for license informations.
 # Copyright (C) 2015-2020  Picheral, Colin, Irisson (UPMC-CNRS)
 #
-from dataclasses import dataclass
-# from dataclasses import dataclass
-from typing import List, Dict, Optional, Generator, Tuple, Final, Any
-
 #
 # A set of projects
 #
+
+from dataclasses import dataclass
+from typing import Any, Dict, Final, Generator, List, Optional, Tuple
+
 import numpy as np
 
-ProjectFiltersDict = Dict[str, Any]
-from BO.Classification import ClassifIDT, ClassifIDListT
+from API_models.filters import ProjectFiltersDict
+from BO.Classification import ClassifIDListT, ClassifIDT
 from BO.Object import ObjectBO
 from BO.ObjectSet import DescribedObjectSet
-from BO.Rights import RightsBO, Action
-from DB.User import UserIDT
-from DB.Object import ObjectIDListT
-from DB.Project import ProjectIDListT, Project
-from DB.helpers import Session, Result
+from DB.helpers import Result, Session
 from DB.helpers.Direct import text
 from DB.helpers.ORM import any_
 from DB.helpers.SQL import SelectClause
+
+# from BO.Rights import RightsBO, Action
+# from DB.User import UserIDT
+from DB.Object import ObjectIDListT
+from DB.Project import Project, ProjectIDListT
 from helpers.DynamicLogs import get_logger
 
 
@@ -301,28 +302,28 @@ class LimitedInCategoriesProjectSet(FeatureConsistentProjectSet):
         return sql
 
 
-class PermissionConsistentProjectSet(object):
-    """
-    A list of projects which can be tested, permission-speaking, against a user.
-    """
-
-    def __init__(self, session: Session, prj_ids: ProjectIDListT):
-        assert len(prj_ids) > 0, "Empty project set"
-        self.session = session
-        self.prj_ids = prj_ids
-
-    def can_be_administered_by(
-        self,
-        user_id: UserIDT,
-        update_preference: Optional[bool] = True,
-        action: Action = Action.ADMINISTRATE,
-    ):
-        """We just expect an Exception thrown (or not)"""
-        for a_prj_id in self.prj_ids:
-            RightsBO.user_wants(
-                self.session,
-                user_id,
-                action,
-                a_prj_id,
-                update_preference=update_preference,
-            )
+# class PermissionConsistentProjectSet(object):
+#     """
+#     A list of projects which can be tested, permission-speaking, against a user.
+#     """
+#
+#     def __init__(self, session: Session, prj_ids: ProjectIDListT):
+#         assert len(prj_ids) > 0, "Empty project set"
+#         self.session = session
+#         self.prj_ids = prj_ids
+#
+#     def can_be_administered_by(
+#         self,
+#         user_id: UserIDT,
+#         update_preference: Optional[bool] = True,
+#         action: Action = Action.ADMINISTRATE,
+#     ):
+#         """We just expect an Exception thrown (or not)"""
+#         for a_prj_id in self.prj_ids:
+#             RightsBO.user_wants(
+#                 self.session,
+#                 user_id,
+#                 action,
+#                 a_prj_id,
+#                 update_preference=update_preference,
+#             )
