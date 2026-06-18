@@ -7,21 +7,18 @@
 # A prediction is the output of an automatic classification process.
 #    This is heavily based on machine learning algorithms.
 #
-from typing import Any, List, Dict, ClassVar, TYPE_CHECKING
+from typing import Any, List, Dict, ClassVar
 
-import numpy as np  # type: ignore
-from numpy import ndarray
-from sqlalchemy import text
+import numpy as np
+from sqlalchemy import text, and_
 
 from DB.Project import ProjectIDT
-from DB.Object import ObjectIDT
-
-if TYPE_CHECKING:
-    from DB.CNNFeatureVector import (
-        ObjectCNNFeatureVector,
-    )
+from DB.Object import ObjectIDT, ObjectHeader
+# from DB.Acquisition import Acquisition
+# from DB.Sample import Sample
 
 from DB.CNNFeatureVector import (
+    ObjectCNNFeatureVector,
     N_DEEP_FEATURES,
 )
 from DB.Image import Image
@@ -48,20 +45,20 @@ class DeepFeatures(object):
     #     """
     #     Delete all CNN features from DB, for this project.
     #     """
-        # sub_qry = session.query(ObjectHeader.objid)
-        # sub_qry = sub_qry.join(
-        #     Acquisition, Acquisition.acquisid == ObjectHeader.acquisid
-        # )
-        # sub_qry = sub_qry.join(
-        #     Sample,
-        #     and_(
-        #         Sample.sampleid == Acquisition.acq_sample_id, Sample.projid == proj_id
-        #     ),
-        # )
-        # qry = session.query(ObjectCNNFeatureVector)
-        # qry = qry.filter(ObjectCNNFeatureVector.objcnnid.in_(sub_qry))
-        # nb_deleted = qry.delete(synchronize_session=False)
-        # return nb_deleted
+    #     sub_qry = session.query(ObjectHeader.objid)
+    #     sub_qry = sub_qry.join(
+    #         Acquisition, Acquisition.acquisid == ObjectHeader.acquisid
+    #     )
+    #     sub_qry = sub_qry.join(
+    #         Sample,
+    #         and_(
+    #             Sample.sampleid == Acquisition.acq_sample_id, Sample.projid == proj_id
+    #         ),
+    #     )
+    #     qry = session.query(ObjectCNNFeatureVector)
+    #     qry = qry.filter(ObjectCNNFeatureVector.objcnnid.in_(sub_qry))
+    #     nb_deleted = qry.delete(synchronize_session=False)
+    #     return nb_deleted
 
     @staticmethod
     def find_missing(
@@ -92,7 +89,7 @@ class DeepFeatures(object):
         ret = {}
         for objid, imgid, orig_file_name in res:
             assert imgid is not None, "Object %d has no image in DB" % objid
-            if not objid in ret:
+            if objid not in ret:
                 ret[objid] = Image.img_from_id_and_orig(imgid, orig_file_name)
             else:  # Only pick the first image
                 pass
@@ -133,14 +130,14 @@ class DeepFeatures(object):
         return res
 
     @classmethod
-    def np_read_for_objects(cls, session: Session, oid_lst: List[int]) -> ndarray:
+    def np_read_for_objects(cls, session: Session, oid_lst: List[int]) -> np.ndarray:
         """
         Read CNN lines AKA features, in order, for given object_ids, into a NumPy array
         """
         res = cls.read_for_objects(session, oid_lst)
-        ret: np.ndarray = np.ndarray(
+        ret = np.empty(
             shape=(len(oid_lst), N_DEEP_FEATURES), dtype=np.float32
-        )
+        )  # type: np.ndarray
         ndx = 0
         for a_row in res:
             all_feats = (

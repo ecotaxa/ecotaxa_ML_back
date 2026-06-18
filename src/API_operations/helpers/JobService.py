@@ -121,21 +121,22 @@ class JobServiceBase(Service, LogEmitter, ABC):
         """Injection of service reply to last question"""
         self.last_reply = job_reply
 
+    # This app is a slave, no job creation
     # def create_job(self, job_type: str, user_id: UserIDT):
     #     args = self.init_args({})
-    #     Add a pending job, to pick by runner thread, @see JobScheduler.py
-        # new_job = JobBO.create_job(user_id, job_type, args)
-        # self.session.add(new_job)
-        # self.session.commit() # Uncomment to see the race condition in def test_log_file_exists_if_job_exists
-        # self.session.flush(
-        #     [new_job]
-        # )  # Flush sends the SQL to PG, so we can get the id from sequence
-        # self.job_id = new_job.id
-        # self.temp_for_jobs.erase_for(new_job.id)  # mainly for tests
-        # with LogsSwitcher(self):
-        #     Write arrival event into job log
-            # logger.info("Creating job %d", self.job_id)
-        # self.session.commit()
+    #     # Add a pending job, to pick by runner thread, @see JobScheduler.py
+    #     new_job = JobBO.create_job(user_id, job_type, args)
+    #     self.session.add(new_job)
+    #     self.session.commit() # Uncomment to see the race condition in def test_log_file_exists_if_job_exists
+    #     self.session.flush(
+    #         [new_job]
+    #     )  # Flush sends the SQL to PG, so we can get the id from sequence
+    #     self.job_id = new_job.id
+    #     self.temp_for_jobs.erase_for(new_job.id)  # mainly for tests
+    #     with LogsSwitcher(self):
+    #         # Write arrival event into job log
+    #         logger.info("Creating job %d", self.job_id)
+    #     self.session.commit()
 
     def _get_job(self) -> Job:
         job: Optional[Job] = self.session.query(Job).get(self.job_id)

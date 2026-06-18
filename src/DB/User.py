@@ -95,16 +95,16 @@ class Guest(Person):
         "polymorphic_identity": "guest",
     }
 
-    def to_user(self) -> User:
-        user = User()
-        user.id = self.id
-        user.name = self.name
-        user.email = self.email
-        user.country = self.country
-        user.orcid = self.orcid
-        user.usercreationdate = self.usercreationdate
-        user.organization_id = self.organization_id
-        return user
+    # def to_user(self) -> User:
+    #     user = User()
+    #     user.id = self.id
+    #     user.name = self.name
+    #     user.email = self.email
+    #     user.country = self.country
+    #     user.orcid = self.orcid
+    #     user.usercreationdate = self.usercreationdate
+    #     user.organization_id = self.organization_id
+    #     return user
 
 
 class User(Person):
@@ -184,13 +184,13 @@ class UserRole(Model):
     role_id = Column(Integer(), ForeignKey("roles.id"), primary_key=True)
 
 
-class Country(Model):
-    """
-    TODO: There is no FK from users
-    """
-
-    __tablename__ = "countrylist"
-    countryname = Column(String(50), primary_key=True, nullable=False)
+# class Country(Model):
+#     """
+#     TODO: There is no FK from users
+#     """
+#
+#     __tablename__ = "countrylist"
+#     countryname = Column(String(50), primary_key=True, nullable=False)
 
 
 # @event.listens_for(Country.__table__, "after_create")
@@ -203,35 +203,35 @@ class Country(Model):
 #         sess.execute(ins)
 
 
-class TempPasswordReset(Model):
-    """
-    store temporary uuid when a reset password is in progress
-    """
+# class TempPasswordReset(Model):
+#     """
+#     store temporary uuid when a reset password is in progress
+#     """
+#
+#     __tablename__ = "user_password_reset"
+#     user_id = Column(
+#         Integer(),
+#         ForeignKey(
+#             "users.id", name="user_password_reset_user_id_fkey", ondelete="CASCADE"
+#         ),
+#         primary_key=True,
+#     )
+#     temp_password = Column(String(255), nullable=False)
+#     creation_date = Column(TIMESTAMP, default=func.now(), nullable=False)
 
-    __tablename__ = "user_password_reset"
-    user_id = Column(
-        Integer(),
-        ForeignKey(
-            "users.id", name="user_password_reset_user_id_fkey", ondelete="CASCADE"
-        ),
-        primary_key=True,
-    )
-    temp_password = Column(String(255), nullable=False)
-    creation_date = Column(TIMESTAMP, default=func.now(), nullable=False)
 
-
-class UserQuality(Model):
-    """
-    Store user password quality.
-    """
-
-    __tablename__ = "user_quality"
-    user_id = Column(
-        Integer(),
-        ForeignKey("users.id", name="user_quality_user_id_fkey", ondelete="CASCADE"),
-        primary_key=True,
-    )
-    password_strong = Column(Boolean(), nullable=False)
-    check_date = Column(
-        TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False
-    )
+# class UserQuality(Model):
+#     """
+#     Store user password quality.
+#     """
+#
+#     __tablename__ = "user_quality"
+#     user_id = Column(
+#         Integer(),
+#         ForeignKey("users.id", name="user_quality_user_id_fkey", ondelete="CASCADE"),
+#         primary_key=True,
+#     )
+#     password_strong = Column(Boolean(), nullable=False)
+#     check_date = Column(
+#         TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False
+#     )
