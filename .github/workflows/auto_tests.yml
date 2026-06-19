@@ -11,6 +11,10 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
+    permissions:
+      pull-requests: write
+      contents: read
+
     environment: Env_for_Actions
     # The type of runner that the job will run on
     runs-on: [ubuntu-latest]
@@ -55,7 +59,8 @@ jobs:
     # Checkout.
     - uses: actions/checkout@v4
     # Run both tests and coverage
-    - run: PATH=/venv/bin:$PATH pip3 install tox<4.0.0
+    - run: PATH=/venv/bin:$PATH pip3 install "tox<4.0.0"
+
     - name: Run tox in QA
       working-directory: ./QA/py
       run: |
@@ -65,9 +70,10 @@ jobs:
         POSTGRES_HOST: postgres
         # The default PostgreSQL port
         POSTGRES_PORT: 5432
-    - name: Upload coverage report
-      # Code coverage.
-      uses: codecov/codecov-action@v4
+
+    - name: Pytest coverage comment
+      uses: MishaKav/pytest-coverage-comment@v1.7.2
       with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true # optional (default = false)
+          pytest-xml-coverage-path: ./coverage.xml
+          title: EcoTaxa ML backend coverage
+          badge-title: Coverage
