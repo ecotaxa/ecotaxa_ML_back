@@ -12,7 +12,7 @@ on:
 jobs:
   test:
     permissions:
-      pull-requests: write
+#      pull-requests: write
       contents: read
 
     environment: Env_for_Actions
@@ -73,5 +73,6 @@ jobs:
       uses: MishaKav/pytest-coverage-comment@v1.7.2
       with:
           pytest-xml-coverage-path: ./coverage.xml
+          hide-comment: true
           title: EcoTaxa ML backend coverage
           badge-title: Coverage
