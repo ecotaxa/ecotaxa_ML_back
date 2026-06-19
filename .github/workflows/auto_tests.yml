@@ -38,7 +38,6 @@ jobs:
           --health-retries 5           
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # node (or a lib of) is needed by codecov (or GH)
     # old version of python from this ppa
     - run: apt-get update
     - run: apt-get install software-properties-common gpg-agent --no-install-recommends --yes
@@ -56,8 +55,6 @@ jobs:
     - run: PATH=/venv/bin pip3 install --upgrade pip wheel
     # Checkout.
     - uses: actions/checkout@v5
-      with:
-        path: '.'
       # Run both tests and coverage
     - run: PATH=/venv/bin:$PATH pip3 install "tox<4.0.0"
 
