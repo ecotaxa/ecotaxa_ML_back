@@ -77,4 +77,5 @@ jobs:
           badge-title: Coverage
           hide-comment: true
           remove-links-to-files: true
-          remove-links-to-lines: true
+#          remove-links-to-lines: true
+          xml-skip-covered: true
