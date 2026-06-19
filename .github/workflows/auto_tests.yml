@@ -55,12 +55,14 @@ jobs:
     - run: PATH=/venv/bin pip3 install --upgrade pip wheel
     # Checkout.
     - uses: actions/checkout@v5
+      with:
+        path: '.'
       # Run both tests and coverage
     - run: PATH=/venv/bin:$PATH pip3 install "tox<4.0.0"
 
     - name: Run tox
       run: |
-        PATH=/venv/bin tox
+        PATH=/venv/bin:$PATH tox
       env:
         # The hostname used to communicate with the PostgreSQL service container
         POSTGRES_HOST: postgres
