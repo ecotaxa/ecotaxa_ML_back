@@ -62,7 +62,6 @@ jobs:
     - run: PATH=/venv/bin:$PATH pip3 install "tox<4.0.0"
 
     - name: Run tox in QA
-      working-directory: ./QA/py
       run: |
         PATH=/venv/bin PYTHONPATH=. tox
       env:
