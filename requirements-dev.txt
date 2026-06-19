@@ -2,7 +2,7 @@
 -r requirements.txt
 
 # tests & coverage
-tox==4.25.0
+tox<4.0.0
 pytest==8.3.5
 pytest-cov
 pytest-mock==3.14.1

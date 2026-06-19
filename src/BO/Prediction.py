@@ -40,6 +40,7 @@ class DeepFeatures(object):
 
     SAVE_EVERY: ClassVar = 500
 
+    # Deletion belongs to Web app
     # @staticmethod
     # def delete_all(session: Session, proj_id: ProjectIDT) -> int:
     #     """
