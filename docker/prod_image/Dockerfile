@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 as builder
+FROM ubuntu:18.04 AS builder
 
 #
 # @see https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#install-guide
@@ -40,7 +40,7 @@ COPY docker/prod_image/start.sh /app
 
 ##### Switch to target #####
 # Image is for drivers v470
-FROM nvidia/cuda:11.4.3-cudnn8-runtime-ubuntu18.04 as target
+FROM nvidia/cuda:11.4.3-cudnn8-runtime-ubuntu18.04 AS target
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
 
