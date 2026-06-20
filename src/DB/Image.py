@@ -33,23 +33,23 @@ class Image(Model):
     thumb_width = Column(SMALLINT)
     thumb_height = Column(SMALLINT)
 
-    @staticmethod
-    def fetch_existing_images(session: Session, prj_id):
-        """
-        Get all object/image pairs from the project
-        """
-        # Must be reloaded from DB, as phase 1 added all objects for duplicates checking
-        sql = text(
-            f"SELECT {RECURS_HINT} concat(obh.orig_id,'*',img.orig_file_name) "
-            "  FROM samples sam "
-            "  JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:prj) "
-            "  JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:prj) "
-            "  JOIN images img ON img.objid = obh.objid "
-            " WHERE sam.projid = :prj"
-        )
-        res: Result = session.execute(sql, {"prj": prj_id})
-        ret = {img_id for img_id, in res}
-        return ret
+    # @staticmethod
+    # def fetch_existing_images(session: Session, prj_id):
+    #     """
+    #     Get all object/image pairs from the project
+    #     """
+    #     # Must be reloaded from DB, as phase 1 added all objects for duplicates checking
+    #     sql = text(
+    #         f"SELECT {RECURS_HINT} concat(obh.orig_id,'*',img.orig_file_name) "
+    #         "  FROM samples sam "
+    #         "  JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:prj) "
+    #         "  JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:prj) "
+    #         "  JOIN images img ON img.objid = obh.objid "
+    #         " WHERE sam.projid = :prj"
+    #     )
+    #     res: Result = session.execute(sql, {"prj": prj_id})
+    #     ret = {img_id for img_id, in res}
+    #     return ret
 
     def img_to_file(self):
         """Return the path in vault to the image"""

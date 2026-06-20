@@ -26,6 +26,10 @@ HERE = Path(dirname(realpath(__file__)))
 # from API_operations.admin.NightlyJob import NightlyJobService
 # from API_operations.Subset import SubsetServiceOnProject
 
+# We set this one in env. and anyway TF is not working without it
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+from API_operations.GPU_Prediction import GPUPredictForProject
+
 
 class EcoTaxaConfig(object):
     def cleanup(self):
@@ -46,6 +50,7 @@ def config() -> Generator[EcoTaxaConfig, Any, None]:
     # Comment for a better coverage of Process jobs. But some tests will fail
     # due to the fresh process.
     # JobScheduler.JobRunner = JobScheduler.ThreadJobRunner
+    GPUPredictForProject.CHUNK_SIZE = 40
     # Empty Vault
     vault = Vault((HERE / "vault").as_posix())
     shutil.rmtree(vault.path.joinpath("0000").as_posix(), ignore_errors=True)

@@ -21,7 +21,7 @@ if True:
     from .Object import ObjectHeader, ObjectFields, ObjectsClassifHisto
     from .Process import Process
     from .Project import Project
-    from .ProjectVariables import ProjectVariables
+    # from .ProjectVariables import ProjectVariables
     from .ProjectPrivilege import ProjectPrivilege
     from .Sample import Sample
     from .Taxonomy import Taxonomy
@@ -73,10 +73,10 @@ if True:
     #     Organization, uselist=False, lazy="joined"
     # )  # type: ignore # case2
     # Ancilliary to project
-    ProjectVariables.project = relationship(
-        Project, viewonly=True
-    )  # type: ignore # case2
-    Project.variables = relationship(ProjectVariables, uselist=False)
+    # ProjectVariables.project = relationship(
+    #     Project, viewonly=True
+    # )  # type: ignore # case2
+    # Project.variables = relationship(ProjectVariables, uselist=False)
 
     # Project
     Project.all_samples = relationship(Sample, viewonly=True)
