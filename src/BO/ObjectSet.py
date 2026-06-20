@@ -1549,65 +1549,65 @@ class ObjectSetFilter(object):
         return less_filtered
 
 
-class DescribedObjectBOSet(BaseDescribedObjectSet):
-    """
-    A (potentially large) set of objects, described by a base rule (all objects in
-    a list of projects) and filtered by exclusion conditions.
-    """
-
-    __slots__ = ("project_ids",)
-
-    def __init__(
-        self,
-        session: Session,
-        project_ids: ProjectIDListT,
-        user_id: Optional[UserIDT],
-        filters: ProjectFiltersDict,
-    ):
-        super().__init__(session, user_id, filters)
-        self.project_ids = project_ids
-        # store for iteration
-        src_projects: List[Project] = (
-            session.query(Project).filter(Project.projid.in_(self.project_ids)).all()  # type: ignore
-        )
-        self.mapping: ProjectSetMapping = ProjectSetMapping().load_from_projects(
-            src_projects
-        )
-
-    def _get_sql_params(self) -> SQLParamDict:
-        return {
-            "projid": ",".join([str(project_id) for project_id in self.project_ids])
-        }
-
-    def _get_initial_from_clause(self) -> FromClause:
-        return FromClause(f"(select :projid as projid) prjs")
-
-    def _get_bound_expression(self) -> str:
-        return "<@ obj_in_prj(prjs.projid)"  # Hide partitioning from optimizer
-
-    def _get_acq_partition(self) -> str:
-        return f"<@ acq_in_prj(prjs.projid)"
-
-    def without_filtering_taxo(self):
-        """
-        Return a clone of self, but without any Taxonomy related filter.
-        """
-        filters_but_taxo = self.filters.filters_without_taxo()
-        return DescribedObjectBOSet(
-            self.filters.session, self.project_ids, self.user_id, filters_but_taxo
-        )
-
-    @staticmethod
-    def into_select_list(
-        select_clause: SelectClause,
-        alias: str,
-        table_name: str,
-        mappingcols: Dict[str, str],
-    ) -> None:
-        """
-        Add SQL select expressions to the given clause for given alias.
-        col = name of db column mapping , name= name of tsv column
-        """
-        tsv_table_name = TABLE_TO_PREFIX[table_name]
-        for name, col in mappingcols.items():
-            select_clause.add_expr(f"{alias}.{col}", f"{tsv_table_name}_{name}")
+# class DescribedObjectBOSet(BaseDescribedObjectSet):
+#     """
+#     A (potentially large) set of objects, described by a base rule (all objects in
+#     a list of projects) and filtered by exclusion conditions.
+#     """
+#
+#     __slots__ = ("project_ids",)
+#
+#     def __init__(
+#         self,
+#         session: Session,
+#         project_ids: ProjectIDListT,
+#         user_id: Optional[UserIDT],
+#         filters: ProjectFiltersDict,
+#     ):
+#         super().__init__(session, user_id, filters)
+#         self.project_ids = project_ids
+#         # store for iteration
+#         src_projects: List[Project] = (
+#             session.query(Project).filter(Project.projid.in_(self.project_ids)).all()  # type: ignore
+#         )
+#         self.mapping: ProjectSetMapping = ProjectSetMapping().load_from_projects(
+#             src_projects
+#         )
+#
+#     def _get_sql_params(self) -> SQLParamDict:
+#         return {
+#             "projid": ",".join([str(project_id) for project_id in self.project_ids])
+#         }
+#
+#     def _get_initial_from_clause(self) -> FromClause:
+#         return FromClause(f"(select :projid as projid) prjs")
+#
+#     def _get_bound_expression(self) -> str:
+#         return "<@ obj_in_prj(prjs.projid)"  # Hide partitioning from optimizer
+#
+#     def _get_acq_partition(self) -> str:
+#         return f"<@ acq_in_prj(prjs.projid)"
+#
+#     def without_filtering_taxo(self):
+#         """
+#         Return a clone of self, but without any Taxonomy related filter.
+#         """
+#         filters_but_taxo = self.filters.filters_without_taxo()
+#         return DescribedObjectBOSet(
+#             self.filters.session, self.project_ids, self.user_id, filters_but_taxo
+#         )
+#
+#     @staticmethod
+#     def into_select_list(
+#         select_clause: SelectClause,
+#         alias: str,
+#         table_name: str,
+#         mappingcols: Dict[str, str],
+#     ) -> None:
+#         """
+#         Add SQL select expressions to the given clause for given alias.
+#         col = name of db column mapping , name= name of tsv column
+#         """
+#         tsv_table_name = TABLE_TO_PREFIX[table_name]
+#         for name, col in mappingcols.items():
+#             select_clause.add_expr(f"{alias}.{col}", f"{tsv_table_name}_{name}")

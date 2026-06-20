@@ -7,10 +7,10 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Optional, List, Dict, NamedTuple, Tuple
 
-from sqlalchemy import tuple_, values, column, String, Integer, Date
+# from sqlalchemy import tuple_, values, column, String, Integer, Date
 
 from BO.Classification import (
-    HistoricalLastClassif,
+    # HistoricalLastClassif,
     ClassifIDT,
     ClassifIDListT,
     ClassifScoresListT,
@@ -18,9 +18,9 @@ from BO.Classification import (
 from DB import Session
 from DB.Object import (
     ObjectIDT,
-    ObjectHeader,
-    ObjectsClassifHisto,
-    PREDICTED_CLASSIF_QUAL,
+    # ObjectHeader,
+    # ObjectsClassifHisto,
+    # PREDICTED_CLASSIF_QUAL,
     ObjectIDListT,
 )
 from DB.Prediction import (
@@ -34,7 +34,7 @@ from DB.helpers.Core import select
 from DB.helpers.ORM import Delete, any_, and_
 from helpers import DateTime
 from helpers.DynamicLogs import get_logger
-from helpers.Timer import CodeTimer
+# from helpers.Timer import CodeTimer
 
 logger = get_logger(__name__)
 
@@ -91,49 +91,49 @@ class TrainingBO(object):
         logger.info("create_one: %s", str(trn))
         return TrainingBO(trn)
 
-    @classmethod
-    def find_by_start_time_or_create(
-        cls, session: Session, author: UserIDT, reason: str, start_time: datetime
-    ) -> "TrainingBO":
-        ret = (
-            session.query(Training)
-            .filter(Training.training_start == start_time)
-            .first()
-        )
-        if ret is None:
-            return cls.create_one(session, author, reason, start_time)
-        else:
-            return TrainingBO(ret)
+    # @classmethod
+    # def find_by_start_time_or_create(
+    #     cls, session: Session, author: UserIDT, reason: str, start_time: datetime
+    # ) -> "TrainingBO":
+    #     ret = (
+    #         session.query(Training)
+    #         .filter(Training.training_start == start_time)
+    #         .first()
+    #     )
+    #     if ret is None:
+    #         return cls.create_one(session, author, reason, start_time)
+    #     else:
+    #         return TrainingBO(ret)
 
 
-class TrainingBOProvider(object):
-    """We don't want to create empty trainings, so provide one only when we know it will be useful,
-    i.e. filled with predictions."""
-
-    def __init__(
-        self,
-        session: Session,
-        user_id: UserIDT,
-        reason: str,
-        training_start: Optional[datetime] = None,
-    ):
-        self.session: Session = session
-        self.user_id = user_id
-        self.training_start = (
-            DateTime.now_time() if training_start is None else training_start
-        )
-        self.path = reason
-        self.current_training: Optional[TrainingBO] = None
-
-    def provide(self) -> TrainingBO:
-        if self.current_training is None:
-            self.current_training = TrainingBO.find_by_start_time_or_create(
-                self.session,
-                self.user_id,
-                self.path,
-                self.training_start,
-            )
-        return self.current_training
+# class TrainingBOProvider(object):
+#     """We don't want to create empty trainings, so provide one only when we know it will be useful,
+#     i.e. filled with predictions."""
+#
+#     def __init__(
+#         self,
+#         session: Session,
+#         user_id: UserIDT,
+#         reason: str,
+#         training_start: Optional[datetime] = None,
+#     ):
+#         self.session: Session = session
+#         self.user_id = user_id
+#         self.training_start = (
+#             DateTime.now_time() if training_start is None else training_start
+#         )
+#         self.path = reason
+#         self.current_training: Optional[TrainingBO] = None
+#
+#     def provide(self) -> TrainingBO:
+#         if self.current_training is None:
+#             self.current_training = TrainingBO.find_by_start_time_or_create(
+#                 self.session,
+#                 self.user_id,
+#                 self.path,
+#                 self.training_start,
+#             )
+#         return self.current_training
 
 
 class PredictionBO(object):
@@ -147,42 +147,42 @@ class PredictionBO(object):
         assert len(object_ids) == 0 or isinstance(object_ids[0], ObjectIDT)
         self.object_ids = object_ids
 
-    def get_prediction_infos(self) -> List[PredictionInfoT]:
-        """
-        Return the predictions, per object in decreasing score.
-        """
-        qry = select(Prediction.object_id, Prediction.classif_id, Prediction.score)
-        qry = qry.join(ObjectHeader)
-        qry = qry.filter(ObjectHeader.objid == any_(self.object_ids))
-        qry = qry.order_by(Prediction.object_id, Prediction.score.desc())
-        with CodeTimer("Preds for %d objs: " % len(self.object_ids), logger):
-            return [
-                PredictionInfoT(objid, classif_id, score)
-                for (objid, classif_id, score) in self.session.execute(qry)
-            ]
+    # def get_prediction_infos(self) -> List[PredictionInfoT]:
+    #     """
+    #     Return the predictions, per object in decreasing score.
+    #     """
+    #     qry = select(Prediction.object_id, Prediction.classif_id, Prediction.score)
+    #     qry = qry.join(ObjectHeader)
+    #     qry = qry.filter(ObjectHeader.objid == any_(self.object_ids))
+    #     qry = qry.order_by(Prediction.object_id, Prediction.score.desc())
+    #     with CodeTimer("Preds for %d objs: " % len(self.object_ids), logger):
+    #         return [
+    #             PredictionInfoT(objid, classif_id, score)
+    #             for (objid, classif_id, score) in self.session.execute(qry)
+    #         ]
 
-    def get_storable_predictions(
-        self,
-    ) -> Tuple[List[ClassifIDListT], List[ClassifScoresListT]]:
-        """
-        Return the predictions, in the format for creating them.
-        """
-        predictions = self.get_prediction_infos()
-        curr_objid = -1
-        classif_ids_list = []
-        classif_scores_list = []
-        classif_ids: ClassifIDListT = []
-        classif_scores: ClassifScoresListT = []
-        for a_prediction in predictions:
-            if a_prediction.object_id != curr_objid:
-                curr_objid = a_prediction.object_id
-                classif_ids = []
-                classif_scores = []
-                classif_ids_list.append(classif_ids)
-                classif_scores_list.append(classif_scores)
-            classif_ids.append(a_prediction.classif_id)
-            classif_scores.append(a_prediction.score)
-        return classif_ids_list, classif_scores_list
+    # def get_storable_predictions(
+    #     self,
+    # ) -> Tuple[List[ClassifIDListT], List[ClassifScoresListT]]:
+    #     """
+    #     Return the predictions, in the format for creating them.
+    #     """
+    #     predictions = self.get_prediction_infos()
+    #     curr_objid = -1
+    #     classif_ids_list = []
+    #     classif_scores_list = []
+    #     classif_ids: ClassifIDListT = []
+    #     classif_scores: ClassifScoresListT = []
+    #     for a_prediction in predictions:
+    #         if a_prediction.object_id != curr_objid:
+    #             curr_objid = a_prediction.object_id
+    #             classif_ids = []
+    #             classif_scores = []
+    #             classif_ids_list.append(classif_ids)
+    #             classif_scores_list.append(classif_scores)
+    #         classif_ids.append(a_prediction.classif_id)
+    #         classif_scores.append(a_prediction.score)
+    #     return classif_ids_list, classif_scores_list
 
     MAX_PREDICTIONS_PER_OBJECT = 3  # How many (classif_id, score) we keep per object
 
@@ -323,48 +323,48 @@ class PredictionBO(object):
     #     self.session.execute(histo_pred_del_qry)
 
     # def reconstruct_predictions(self, histo: List[HistoricalLastClassif]):
-        # Rebuild one prediction per object using the training that matches the date
-        # We only do this for objects that have PREDICTED_CLASSIF_QUAL
-        # preds_to_rebuild = []
-        # new_training_bo = None
-        # for an_histo in histo:
-        #     if an_histo.histo_classif_qual != PREDICTED_CLASSIF_QUAL:
-        #         continue
-        #     # Find matching training
-        #     matching_training = (
-        #         self.session.query(Training.training_id)
-        #         .filter(
-        #             and_(
-        #                 Training.training_start <= an_histo.histo_classif_date,
-        #                 Training.training_end >= an_histo.histo_classif_date,
-        #             )
-        #         )
-        #         .first()
-        #     )
-        #     training_id = matching_training.training_id if matching_training else None
-        #
-        #     if training_id is None:
-        #         if new_training_bo is None:
-        #             # Create a single new training for all objects that have no matching training
-        #             new_training_bo = TrainingBO.create_one(
-        #                 self.session,
-        #                 author=an_histo.histo_classif_who,
-        #                 reason="Reconstructed from history",
-        #                 training_start=an_histo.histo_classif_date,
-        #             )
-        #         training_id = new_training_bo.training_id
-        #
-        #     preds_to_rebuild.append(
-        #         {
-        #             Prediction.training_id.name: training_id,
-        #             Prediction.object_id.name: an_histo.objid,
-        #             Prediction.classif_id.name: an_histo.histo_classif_id,
-        #             Prediction.score.name: an_histo.histo_classif_score,
-        #         }
-        #     )
-        #
-        # if new_training_bo:
-        #     new_training_bo.advance()
-        #
-        # if preds_to_rebuild:
-        #     self.session.bulk_insert_mappings(Prediction, preds_to_rebuild)
+    #     # Rebuild one prediction per object using the training that matches the date
+    #     # We only do this for objects that have PREDICTED_CLASSIF_QUAL
+    #     preds_to_rebuild = []
+    #     new_training_bo = None
+    #     for an_histo in histo:
+    #         if an_histo.histo_classif_qual != PREDICTED_CLASSIF_QUAL:
+    #             continue
+    #         # Find matching training
+    #         matching_training = (
+    #             self.session.query(Training.training_id)
+    #             .filter(
+    #                 and_(
+    #                     Training.training_start <= an_histo.histo_classif_date,
+    #                     Training.training_end >= an_histo.histo_classif_date,
+    #                 )
+    #             )
+    #             .first()
+    #         )
+    #         training_id = matching_training.training_id if matching_training else None
+    #
+    #         if training_id is None:
+    #             if new_training_bo is None:
+    #                 # Create a single new training for all objects that have no matching training
+    #                 new_training_bo = TrainingBO.create_one(
+    #                     self.session,
+    #                     author=an_histo.histo_classif_who,
+    #                     reason="Reconstructed from history",
+    #                     training_start=an_histo.histo_classif_date,
+    #                 )
+    #             training_id = new_training_bo.training_id
+    #
+    #         preds_to_rebuild.append(
+    #             {
+    #                 Prediction.training_id.name: training_id,
+    #                 Prediction.object_id.name: an_histo.objid,
+    #                 Prediction.classif_id.name: an_histo.histo_classif_id,
+    #                 Prediction.score.name: an_histo.histo_classif_score,
+    #             }
+    #         )
+    #
+    #     if new_training_bo:
+    #         new_training_bo.advance()
+    #
+    #     if preds_to_rebuild:
+    #         self.session.bulk_insert_mappings(Prediction, preds_to_rebuild)
