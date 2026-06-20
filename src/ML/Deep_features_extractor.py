@@ -104,7 +104,7 @@ class DeepFeaturesExtractor(MachineLearningBase):
             pca = pickle.load(pca_file)
         return input_shape, my_fe, pca
 
-    def test(self, csv_in: IO, model_name: str) -> StringIO:
+    def test(self, csv_in: IO, model_name: str) -> StringIO: # pragma: no cover
         """
         Try the model.
         """

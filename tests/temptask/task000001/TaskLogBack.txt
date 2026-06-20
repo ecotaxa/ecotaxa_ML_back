@@ -1,0 +1,459 @@
+2026-06-18 09:49:46,665:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-18 09:49:46,697:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-18 09:49:46,698:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-18 09:49:46,698:API_operations.GPU_Prediction:INFO Dropped features: {'obj.depth_min': 'Constant :500.0', 'obj.depth_max': 'Constant :1000.0'}
+2026-06-18 09:49:46,703:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-18 09:49:46.701959+00:00
+2026-06-18 09:49:46,704:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-18 09:49:47,011:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-18 09:49:47,015:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-18 09:49:47,016:API_operations.GPU_Prediction:INFO One chunk of 0
+2026-06-18 09:49:57,737:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-18 09:49:57,770:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-18 09:49:57,770:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-18 09:49:57,770:API_operations.GPU_Prediction:INFO Dropped features: {'obj.depth_min': 'Constant :500.0', 'obj.depth_max': 'Constant :1000.0'}
+2026-06-18 09:49:57,775:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-18 09:49:57.774093+00:00
+2026-06-18 09:49:57,776:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-18 09:49:58,109:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-18 09:49:58,113:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-18 09:49:58,114:API_operations.GPU_Prediction:INFO One chunk of 0
+2026-06-18 09:51:06,956:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-18 09:51:06,988:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-18 09:51:06,989:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-18 09:51:06,989:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-18 09:51:06,993:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-18 09:51:06.992249+00:00
+2026-06-18 09:51:06,994:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-18 09:51:07,329:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-18 09:51:07,333:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-18 09:51:07,334:API_operations.GPU_Prediction:INFO One chunk of 0
+2026-06-18 09:55:14,476:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-18 09:55:14,508:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-18 09:55:14,509:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-18 09:55:14,509:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-18 09:55:14,513:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-18 09:55:14.512368+00:00
+2026-06-18 09:55:14,514:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-18 09:55:14,819:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-18 09:55:14,823:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-18 09:55:14,825:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-18 09:55:14,849:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-18 09:55:14,859:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-18 09:55:14,860:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-18 09:55:14,860:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-18 09:55:14,863:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-18 09:56:17,651:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-18 09:56:17,692:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-18 09:56:17,693:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-18 09:56:17,693:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-18 09:56:17,700:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-18 09:56:17.698433+00:00
+2026-06-18 09:56:17,702:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-18 09:56:18,105:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-18 09:56:18,111:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-18 09:56:18,113:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-18 09:56:18,147:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-18 09:56:18,158:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-18 09:56:18,160:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-18 09:56:18,160:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-18 09:56:18,162:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-19 15:59:42,716:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-19 15:59:42,757:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-19 15:59:42,758:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-19 15:59:42,758:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-19 15:59:42,765:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-19 15:59:42.763479+00:00
+2026-06-19 15:59:42,766:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-19 15:59:43,139:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-19 15:59:43,144:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-19 15:59:43,145:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-19 15:59:43,181:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-19 15:59:43,193:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-19 15:59:43,195:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-19 15:59:43,195:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-19 15:59:43,197:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-19 16:00:29,281:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-19 16:00:29,322:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-19 16:00:29,322:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-19 16:00:29,322:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-19 16:00:29,329:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-19 16:00:29.327993+00:00
+2026-06-19 16:00:29,331:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-19 16:00:29,731:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-19 16:00:29,738:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-19 16:00:29,740:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-19 16:00:29,777:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-19 16:00:29,791:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-19 16:00:29,792:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-19 16:00:29,792:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-19 16:00:29,795:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-19 16:24:17,934:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-19 16:24:17,973:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-19 16:24:17,973:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-19 16:24:17,974:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-19 16:24:17,980:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-19 16:24:17.978767+00:00
+2026-06-19 16:24:17,981:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-19 16:24:18,342:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-19 16:24:18,348:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-19 16:24:18,350:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-19 16:24:18,384:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-19 16:24:18,395:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-19 16:24:18,397:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-19 16:24:18,397:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-19 16:24:18,399:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:37:46,479:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:37:46,519:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:37:46,520:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:37:46,520:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:37:46,527:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:37:46.525474+00:00
+2026-06-20 11:37:46,528:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:37:46,952:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:37:46,958:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:37:46,961:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:37:46,996:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:37:47,007:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:37:47,009:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:37:47,009:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:37:47,011:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:41:03,577:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:41:03,616:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:41:03,616:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:41:03,616:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:41:03,623:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:41:03.622044+00:00
+2026-06-20 11:41:03,625:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:41:04,024:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:41:04,028:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:41:04,030:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:41:04,064:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:41:04,075:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:41:04,076:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:41:04,076:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:41:04,079:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:45:35,388:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:45:35,428:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:45:35,428:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:45:35,428:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:45:35,435:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:45:35.433905+00:00
+2026-06-20 11:45:35,437:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:45:35,846:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:45:35,851:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:45:35,853:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:45:35,895:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:45:35,906:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:45:35,907:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:45:35,907:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:45:35,910:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:51:58,804:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:51:58,842:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:51:58,843:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:51:58,843:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:51:58,850:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:51:58.848834+00:00
+2026-06-20 11:51:58,852:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:51:59,243:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:51:59,248:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:51:59,250:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:51:59,284:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:51:59,296:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:51:59,297:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:51:59,297:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:51:59,300:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:56:44,984:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:56:45,024:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:56:45,025:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:56:45,025:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:56:45,031:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:56:45.030235+00:00
+2026-06-20 11:56:45,033:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:56:45,415:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:56:45,420:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:56:45,422:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:56:45,456:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:56:45,467:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:56:45,469:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:56:45,469:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:56:45,471:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 11:58:53,355:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 11:58:53,394:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 11:58:53,395:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 11:58:53,395:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 11:58:53,401:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 11:58:53.400161+00:00
+2026-06-20 11:58:53,403:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 11:58:53,766:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 11:58:53,771:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 11:58:53,772:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 11:58:53,806:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 11:58:53,817:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 11:58:53,819:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 11:58:53,819:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 11:58:53,821:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 12:00:38,485:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 12:00:38,525:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 12:00:38,526:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 12:00:38,526:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 12:00:38,532:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 12:00:38.530785+00:00
+2026-06-20 12:00:38,534:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 12:00:38,930:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 12:00:38,935:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 12:00:38,936:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 12:00:38,971:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 12:00:38,982:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 12:00:38,984:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 12:00:38,984:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 12:00:38,986:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 12:01:25,640:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 12:01:25,721:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 12:01:25,722:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 12:01:25,723:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 12:01:25,741:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 12:01:25.737477+00:00
+2026-06-20 12:01:25,745:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 12:01:26,711:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 12:01:26,719:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 12:01:26,722:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 12:01:26,826:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 12:01:26,850:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 12:01:26,853:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 12:01:26,853:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 12:01:26,858:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 12:10:22,927:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 12:10:22,965:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 12:10:22,966:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 12:10:22,966:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 12:10:22,973:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 12:10:22.971404+00:00
+2026-06-20 12:10:22,974:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 12:10:23,380:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 12:10:23,385:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 12:10:23,386:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 12:10:23,421:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 12:10:23,432:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 12:10:23,434:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 12:10:23,434:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 12:10:23,436:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 12:10:54,146:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 12:10:54,186:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 12:10:54,186:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 12:10:54,186:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 12:10:54,193:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 12:10:54.191869+00:00
+2026-06-20 12:10:54,195:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 12:10:54,575:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 12:10:54,580:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 12:10:54,582:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 12:10:54,617:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 12:10:54,629:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 12:10:54,630:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 12:10:54,630:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 12:10:54,633:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 12:22:30,779:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 12:22:30,818:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 12:22:30,819:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 12:22:30,819:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 12:22:30,825:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 12:22:30.824180+00:00
+2026-06-20 12:22:30,827:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 12:22:31,194:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 12:22:31,198:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 12:22:31,200:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 12:22:31,235:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 12:22:31,247:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 12:22:31,249:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 12:22:31,249:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 12:22:31,251:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 15:14:06,055:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 15:14:06,096:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 15:14:06,097:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 15:14:06,097:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 15:14:06,103:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 15:14:06.102037+00:00
+2026-06-20 15:14:06,104:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 15:14:06,392:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 15:14:06,394:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 15:14:06,396:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 15:14:06,419:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 15:14:06,427:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 15:14:06,429:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 15:14:06,429:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 15:14:06,431:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 15:23:02,880:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 15:23:02,938:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 15:23:02,939:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 15:23:02,939:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 15:23:02,946:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 15:23:02.944466+00:00
+2026-06-20 15:23:02,947:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 15:23:03,313:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 15:23:03,317:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 15:23:03,318:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 15:23:03,354:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 15:23:03,364:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 15:23:03,366:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 15:23:03,366:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 15:23:03,368:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 16:17:08,346:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 16:17:08,398:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 16:17:08,398:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 16:17:08,398:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 16:17:08,406:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 16:17:08.404577+00:00
+2026-06-20 16:17:08,407:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 16:17:08,765:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 16:17:08,769:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 16:17:08,771:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 16:17:08,805:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 16:17:08,815:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 16:17:08,817:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 16:17:08,817:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 16:17:08,819:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 16:23:03,181:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 16:23:03,234:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 16:23:03,234:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 16:23:03,234:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 16:23:03,242:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 16:23:03.240515+00:00
+2026-06-20 16:23:03,243:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 16:23:03,603:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 16:23:03,606:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 16:23:03,608:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 16:23:03,644:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 16:23:03,655:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 16:23:03,656:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 16:23:03,656:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 16:23:03,659:API_operations.GPU_Prediction:INFO Classify done.
+2026-06-20 16:29:40,082:API_operations.GPU_Prediction:INFO Input Param = {'project_id': 1, 'source_project_ids': [2, 3], 'learning_limit': None, 'features': ['obj.depth_min', 'obj.depth_max', 'fre.area'], 'categories': [], 'use_scn': False, 'pre_mapping': {}}
+2026-06-20 16:29:40,123:API_operations.GPU_Prediction:INFO Learning set is 432 lines * 3 columns
+2026-06-20 16:29:40,124:API_operations.GPU_Prediction:INFO NaN replacements: {}
+2026-06-20 16:29:40,124:API_operations.GPU_Prediction:INFO Dropped features: {}
+2026-06-20 16:29:40,131:BO.Training:INFO create_one: Training #1 by user 1 on the 2026-06-20 16:29:40.129382+00:00
+2026-06-20 16:29:40,132:API_operations.GPU_Prediction:INFO Training the classifier
+2026-06-20 16:29:40,422:API_operations.GPU_Prediction:INFO Done training the classifier
+2026-06-20 16:29:40,424:API_operations.GPU_Prediction:INFO Execute SQL : SELECT obh.objid, NULL, obh.depth_min, obh.depth_max, obf.n01 FROM (VALUES (:projid)) AS prjs(projid)
+ JOIN samples sam ON sam.projid = prjs.projid
+ JOIN acquisitions acq ON acq.acq_sample_id = sam.sampleid AND acq.acquisid <@ acq_in_prj(:projid)
+ JOIN obj_head obh ON obh.acquisid = acq.acquisid AND obh.objid <@ obj_in_prj(:projid) AND (obh.classif_qual = 'P' OR obh.classif_qual IS NULL)
+ JOIN obj_field obf ON obf.objfid = obh.objid AND obf.objfid <@ obj_in_prj(:projid) 
+2026-06-20 16:29:40,425:API_operations.GPU_Prediction:INFO One chunk of 9
+2026-06-20 16:29:40,448:BO.ObjectSet:INFO Fetch with lock: SELECT obj_head.objid, obj_head.classif_qual, obj_head.classif_id, obj_head.classif_who, obj_head.classif_date, obj_head.classif_score 
+FROM obj_head 
+WHERE obj_head.objid = ANY (:param_1) FOR UPDATE
+2026-06-20 16:29:40,456:BO.ObjectSet:INFO  0 out of 9 rows copied to log
+2026-06-20 16:29:40,457:BO.ObjectSet:INFO _auto: 9 updates 
+2026-06-20 16:29:40,457:API_operations.GPU_Prediction:INFO Changes :OrderedDict([((1, None, 1, 'P'), [100000001, 100000025, 100000049, 100000073, 100000097, 100000121, 100000145, 100000169, 100000193])])
+2026-06-20 16:29:40,459:API_operations.GPU_Prediction:INFO Classify done.

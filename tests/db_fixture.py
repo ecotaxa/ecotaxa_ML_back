@@ -6,7 +6,7 @@ from typing import Any, Generator
 import pytest
 
 from API_operations.helpers.Service import Service
-from data.load import do_load
+from data.db_load import do_load
 from tools.dbBuildSQL import EcoTaxaDBFrom0
 
 HERE = Path(dirname(realpath(__file__)))

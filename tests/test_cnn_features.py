@@ -11,7 +11,7 @@ from DB.CNNFeatureVector import ObjectCNNFeatureVector
 from DB.Object import ObjectHeader
 from DB.Acquisition import Acquisition
 from DB.Sample import Sample
-from data.load import OBJECTS_IN_PROJECT
+from data.db_load import OBJECTS_IN_PROJECT
 
 
 def test_cnn_features_storage(database):

@@ -135,6 +135,7 @@ class DeepFeatures(object):
         """
         Read CNN lines AKA features, in order, for given object_ids, into a NumPy array
         """
+        assert len(oid_lst) > 0, "No object_id given, maybe all objects are validated?"
         res = cls.read_for_objects(session, oid_lst)
         ret = np.empty(
             shape=(len(oid_lst), N_DEEP_FEATURES), dtype=np.float32
