@@ -61,17 +61,20 @@ class Config(object):
     def vault_dir(self) -> str:
         return self._get("VAULT_DIR", mandatory=True)
 
+    def models_dir(self) -> str:
+        return self._get("MODELSAREA", mandatory=True)
+
     def jobs_dir(self) -> str:
         return self._get("JOBS_DIR", mandatory=True)
 
-    def common_folder(self) -> Optional[str]:
-        return self._get("SERVERLOADAREA", mandatory=False)
+    # def common_folder(self) -> Optional[str]:
+    #     return self._get("SERVERLOADAREA", mandatory=False)
 
-    def export_folder(self) -> Optional[str]:
-        return self._get("FTPEXPORTAREA", mandatory=False)
+    # def export_folder(self) -> Optional[str]:
+    #     return self._get("FTPEXPORTAREA", mandatory=False)
 
-    def secret_key(self) -> str:
-        return self._get("SECRET_KEY", mandatory=True)
+    # def secret_key(self) -> str:
+    #     return self._get("SECRET_KEY", mandatory=True)
 
     def get_db_address(self, read_only: bool = False) -> Tuple[str, int, str]:
         prfx = "RO_" if read_only else ""
@@ -87,142 +90,146 @@ class Config(object):
         password = self._get(prfx + "DB_PASSWORD", mandatory=True)
         return user, password
 
-    def get_thumbnails_limit(self) -> int:
-        return int(self._get("THUMBSIZELIMIT", mandatory=True))
+    # def get_thumbnails_limit(self) -> int:
+    #     return int(self._get("THUMBSIZELIMIT", mandatory=True))
 
-    def get_app_manager(self) -> Tuple[str, str]:
-        return self._get("APPMANAGER_NAME", mandatory=True), self._get(
-            "APPMANAGER_EMAIL", mandatory=True
-        )
+    # def get_app_manager(self) -> Tuple[str, str]:
+    #     return self._get("APPMANAGER_NAME", mandatory=True), self._get(
+    #         "APPMANAGER_EMAIL", mandatory=True
+    #     )
 
-    def get_user_email_verification(self) -> Optional[str]:
-        return self._get("USER_EMAIL_VERIFICATION")
+    # def get_user_email_verification(self) -> Optional[str]:
+    #     return self._get("USER_EMAIL_VERIFICATION")
 
-    def get_account_validation(self) -> Optional[str]:
-        return self._get("ACCOUNT_VALIDATION")
+    # def get_account_validation(self) -> Optional[str]:
+    #     return self._get("ACCOUNT_VALIDATION")
 
-    def get_recaptchaid(self) -> Optional[str]:
-        return self._get("RECAPTCHAID")
+    # def get_recaptchaid(self) -> Optional[str]:
+    #     return self._get("RECAPTCHAID")
 
-    def get_recaptchasecret(self) -> Optional[str]:
-        return self._get("RECAPTCHASECRET")
+    # def get_recaptchasecret(self) -> Optional[str]:
+    #     return self._get("RECAPTCHASECRET")
 
-    def get_all_in_one(self) -> Optional[str]:
-        return self._get("ALL_IN_ONE")
+    # def get_all_in_one(self) -> Optional[str]:
+    #     return self._get("ALL_IN_ONE")
 
-    def get_dir_mail_templates(self) -> Optional[str]:
-        return self._get("DIR_MAIL_TEMPLATES")
+    # def get_dir_mail_templates(self) -> Optional[str]:
+    #     return self._get("DIR_MAIL_TEMPLATES")
 
-    def get_mailservice_secret_key(self) -> Optional[str]:
-        return self._get("MAILSERVICE_SECRET_KEY")
+    # def get_mailservice_secret_key(self) -> Optional[str]:
+    #     return self._get("MAILSERVICE_SECRET_KEY")
 
-    def get_mailservice_salt(self) -> Optional[str]:
-        return self._get("MAILSERVICE_SALT")
+    # def get_mailservice_salt(self) -> Optional[str]:
+    #     return self._get("MAILSERVICE_SALT")
 
-    def get_sender_account(self) -> Optional[str]:
-        # email address used in account management - 0 email - 1 pwd - 2 - dns - 3 port
-        return self._get("SENDER_ACCOUNT")
+    # def get_sender_account(self) -> Optional[str]:
+    #     # email address used in account management - 0 email - 1 pwd - 2 - dns - 3 port
+    #     return self._get("SENDER_ACCOUNT")
 
-    def get_add_ticket(self) -> str:
-        # string separator - separate  ticket number if ticket software is used and admin comment to user
-        return (self._get("ADD_TICKET") or "").strip()
+    # def get_add_ticket(self) -> str:
+    #     # string separator - separate  ticket number if ticket software is used and admin comment to user
+    #     return (self._get("ADD_TICKET") or "").strip()
 
-    def get_account_validation_url(self) -> str:
-        # TODO find a way to have multi request url ( list of identified url ???)
-        url = self._get("SERVERURL", mandatory=True).strip()
-        return url + ("/" if url[-1] != "/" else "")
+    # def get_account_validation_url(self) -> str:
+    #     # TODO find a way to have multi request url ( list of identified url ???)
+    #     url = self._get("SERVERURL", mandatory=True).strip()
+    #     return url + ("/" if url[-1] != "/" else "")
 
-    def get_users_files_dir(self) -> str:
-        # My files service
-        return self._get("USERSFILESAREA", mandatory=True).strip()
+    # def get_users_files_dir(self) -> str:
+    #     # My files service
+    #     return self._get("USERSFILESAREA", mandatory=True).strip()
 
-    def get_time_to_live(self) -> str:
-        # My files service
-        val = self._get("TIMETOLIVE", mandatory=True)
-        return val.strip()
+    # def get_time_to_live(self) -> str:
+    #     # My files service
+    #     val = self._get("TIMETOLIVE", mandatory=True)
+    #     return val.strip()
 
-    def get_cnf(self, key: str, default: Optional[str] = None) -> Optional[str]:
-        # TODO: stop using so we can enumerate the keys
-        return self._get(key, default)
+    # def get_cnf(self, key: str, default: Optional[str] = None) -> Optional[str]:
+    #     # TODO: stop using so we can enumerate the keys
+    #     return self._get(key, default)
 
     def list_cnf(self) -> KeysView[str]:
         return self.parser.keys()
 
-    def get_max_captcha_token_length(self) -> int:
-        return int(self._get("MAX_CAPTCHA_TOKEN_LENGTH", "4096"))
+    # def get_max_captcha_token_length(self) -> int:
+    #     return int(self._get("MAX_CAPTCHA_TOKEN_LENGTH", "4096"))
 
-    def get_max_upload_size(self) -> int:
-        return int(self._get("MAX_UPLOAD_SIZE", "665600"))
+    # def get_max_upload_size(self) -> int:
+    #     return int(self._get("MAX_UPLOAD_SIZE", "665600"))
 
-    DEFAULT_MIMETYPES = "application/zip,application/gzip,application/x-tar,text/plain,text/csv,text/tab-separated-values,image/jpeg,image/png,image/x-png,image/gif,image/tiff"
+    # DEFAULT_MIMETYPES = "application/zip,application/gzip,application/x-tar,text/plain,text/csv,text/tab-separated-values,image/jpeg,image/png,image/x-png,image/gif,image/tiff"
 
-    def get_accepted_mime_types(self) -> List[str]:
-        ret = self._get("ACCEPTED_MIME_TYPES", self.DEFAULT_MIMETYPES)
-        mimes = [r.strip() for r in ret.split(",")]
-        return mimes
+    # def get_accepted_mime_types(self) -> List[str]:
+    #     ret = self._get("ACCEPTED_MIME_TYPES", self.DEFAULT_MIMETYPES)
+    #     mimes = [r.strip() for r in ret.split(",")]
+    #     return mimes
 
-    DEFAULT_ARCHIVES = "zip,tar,gzip,tar.gz,tar.bz2,tar.xz,gz"
+    # DEFAULT_ARCHIVES = "zip,tar,gzip,tar.gz,tar.bz2,tar.xz,gz"
 
-    def get_archive_extensions(self) -> List[str]:
-        ret = self._get("ARCHIVE_EXTENSIONS", self.DEFAULT_ARCHIVES)
-        extensions = [r.strip() for r in ret.split(",")]
-        return extensions
+    # def get_archive_extensions(self) -> List[str]:
+    #     ret = self._get("ARCHIVE_EXTENSIONS", self.DEFAULT_ARCHIVES)
+    #     extensions = [r.strip() for r in ret.split(",")]
+    #     return extensions
 
-    def get_taxoserver_url(self) -> str:
-        url = self._get("TAXOSERVER_URL", mandatory=True).strip()
-        return url + ("/" if url[-1] != "/" else "")
+    # def get_taxoserver_url(self) -> str:
+    #     url = self._get("TAXOSERVER_URL", mandatory=True).strip()
+    #     return url + ("/" if url[-1] != "/" else "")
 
-    def get_openid_config(self) -> Tuple[Optional[str], Optional[str], Optional[str]]:
-        """
-        Return (client_id, client_secret, metadata_url) if all are present,
-        or (None, None, None) if none are present.
-        Raise an exception if only some are present.
-        """
-        client_id = self._get("OPENID_CLIENT_ID")
-        client_secret = self._get("OPENID_CLIENT_SECRET")
-        metadata_url = self._get("OPENID_METADATA_URL")
+    # def get_openid_config(self) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    #     """
+    #     Return (client_id, client_secret, metadata_url) if all are present,
+    #     or (None, None, None) if none are present.
+    #     Raise an exception if only some are present.
+    #     """
+    #     client_id = self._get("OPENID_CLIENT_ID")
+    #     client_secret = self._get("OPENID_CLIENT_SECRET")
+    #     metadata_url = self._get("OPENID_METADATA_URL")
+    #
+    #     configs = [client_id, client_secret, metadata_url]
+    #     if all(configs):
+    #         return client_id, client_secret, metadata_url
+    #     if not any(configs):
+    #         return None, None, None
+    #
+    #     missing = []
+    #     if not client_id:
+    #         missing.append("OPENID_CLIENT_ID")
+    #     if not client_secret:
+    #         missing.append("OPENID_CLIENT_SECRET")
+    #     if not metadata_url:
+    #         missing.append("OPENID_METADATA_URL")
+    #     raise ValueError(
+    #         f"Inconsistent OpenID configuration. Missing: {', '.join(missing)}"
+    #     )
 
-        configs = [client_id, client_secret, metadata_url]
-        if all(configs):
-            return client_id, client_secret, metadata_url
-        if not any(configs):
-            return None, None, None
-
-        missing = []
-        if not client_id:
-            missing.append("OPENID_CLIENT_ID")
-        if not client_secret:
-            missing.append("OPENID_CLIENT_SECRET")
-        if not metadata_url:
-            missing.append("OPENID_METADATA_URL")
-        raise ValueError(
-            f"Inconsistent OpenID configuration. Missing: {', '.join(missing)}"
-        )
-
-    def validate(self):
+    def validate(self) -> None:
         """
         Read all configuration values to ensure they are present and valid.
         """
         vault_dir = self.vault_dir()
         jobs_dir = self.jobs_dir()
-        common_folder = self.common_folder()
-        export_folder = self.export_folder()
-        users_files_dir = self.get_users_files_dir()
+        # common_folder = self.common_folder()
+        # export_folder = self.export_folder()
+        # users_files_dir = self.get_users_files_dir()
+        models_dir = self.models_dir()
 
         for d in [
             vault_dir,
+            models_dir,
             jobs_dir,
-            common_folder,
-            export_folder,
-            users_files_dir,
+            # common_folder,
+            # export_folder,
+            # users_files_dir,
         ]:
             if d is None:
                 continue
             path = Path(d)
             assert path.is_dir(), f"Directory '{d}' does not exist."
-            if d != common_folder:
+            # if d != common_folder:
+            if True:
                 assert os.access(path, os.R_OK), f"Directory '{d}' is not readable."
-            if d != export_folder:
+            # if d != export_folder:
+            if d is jobs_dir:
                 assert os.access(path, os.W_OK), f"Directory '{d}' is not writable."
 
         db_address = self.get_db_address(read_only=False)
@@ -238,23 +245,23 @@ class Config(object):
 
         self.get_db_credentials(read_only=False)
         self.get_db_credentials(read_only=True)
-        self.get_thumbnails_limit()
-        self.secret_key()
-        self.get_app_manager()
-        self.get_user_email_verification()
-        self.get_account_validation()
-        self.get_recaptchaid()
-        self.get_recaptchasecret()
-        self.get_all_in_one()
-        self.get_mailservice_secret_key()
-        self.get_mailservice_salt()
-        self.get_sender_account()
-        self.get_add_ticket()
-        self.get_account_validation_url()
-        self.get_time_to_live()
-        self.get_max_captcha_token_length()
-        self.get_max_upload_size()
-        self.get_taxoserver_url()
-        self.get_openid_config()
-        self.get_accepted_mime_types()
-        self.get_archive_extensions()
+        # self.get_thumbnails_limit()
+        # self.secret_key()
+        # self.get_app_manager()
+        # self.get_user_email_verification()
+        # self.get_account_validation()
+        # self.get_recaptchaid()
+        # self.get_recaptchasecret()
+        # self.get_all_in_one()
+        # self.get_mailservice_secret_key()
+        # self.get_mailservice_salt()
+        # self.get_sender_account()
+        # self.get_add_ticket()
+        # self.get_account_validation_url()
+        # self.get_time_to_live()
+        # self.get_max_captcha_token_length()
+        # self.get_max_upload_size()
+        # self.get_taxoserver_url()
+        # self.get_openid_config()
+        # self.get_accepted_mime_types()
+        # self.get_archive_extensions()

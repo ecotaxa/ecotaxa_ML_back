@@ -7,6 +7,7 @@
 import os
 
 from BG_operations import JobScheduler
+from helpers.AppConfig import Config
 
 # We set this one in env. and anyway TF is not working without it
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
@@ -19,6 +20,7 @@ from DB.helpers.Connection import Connection
 
 
 def main():
+    Config().validate()
     Connection.APP_NAME = "ecotaxa_gpu_back"
     JobScheduler.JobRunner = JobScheduler.ThreadJobRunner
     JobSchedulerClass.INCLUDE = [GPUPredictForProject.JOB_TYPE]

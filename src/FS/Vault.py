@@ -95,34 +95,34 @@ class Vault(object):
             unlink(fout)
         return is_there
 
-    def image_from_bkp(self, img_maybe: Path, sub_path: str) -> bool:  # pragma:nocover
-        """
-        For devs, get image from SIR_storage backup if not there.
-        """
-        is_there = img_maybe.exists()
-        if not is_there:
-            import os
-
-            sub_dir = os.path.dirname(img_maybe)
-            subdir: Path = self.path.joinpath(sub_dir)
-            if sub_dir not in self.ok_subs:
-                try:
-                    # ssh with public key user@host
-                    if not subdir.exists():
-                        subdir.mkdir()
-                        os.system(
-                            "scp user@host:/SIR_Storage/Ecotaxa/vault/"
-                            + os.path.dirname(sub_path)
-                            + "/*"
-                            + " "
-                            + sub_dir
-                        )
-                except Exception as e:  # pragma: no cover
-                    # TODO: Multi-thread hammering test program for having a collision.
-                    if not subdir.exists():
-                        raise e
-                self.ok_subs.add(sub_dir)
-        return is_there
+    # def image_from_bkp(self, img_maybe: Path, sub_path: str) -> bool:  # pragma:nocover
+    #     """
+    #     For devs, get image from SIR_storage backup if not there.
+    #     """
+    #     is_there = img_maybe.exists()
+    #     if not is_there:
+    #         import os
+    #
+    #         sub_dir = os.path.dirname(img_maybe)
+    #         subdir: Path = self.path.joinpath(sub_dir)
+    #         if sub_dir not in self.ok_subs:
+    #             try:
+    #                 # ssh with public key user@host
+    #                 if not subdir.exists():
+    #                     subdir.mkdir()
+    #                     os.system(
+    #                         "scp user@host:/SIR_Storage/Ecotaxa/vault/"
+    #                         + os.path.dirname(sub_path)
+    #                         + "/*"
+    #                         + " "
+    #                         + sub_dir
+    #                     )
+    #             except Exception as e:  # pragma: no cover
+    #                 # TODO: Multi-thread hammering test program for having a collision.
+    #                 if not subdir.exists():
+    #                     raise e
+    #             self.ok_subs.add(sub_dir)
+    #     return is_there
 
     def image_path(self, img_sub_path: str) -> str:
         """
@@ -132,20 +132,20 @@ class Vault(object):
         """
         full_path = self.path.joinpath(img_sub_path)
         # For devs. DO NOT COMMIT
-        self.ensure_there(full_path, img_sub_path)
+        # self.ensure_there(full_path, img_sub_path)
         # self.image_from_bkp(full_path, img_sub_path)
         return full_path.as_posix()
 
-    def thumbnail_paths(self, img_id: int) -> Tuple[str, str]:
-        """
-            Return relative and absolute paths to a thumbnail image.
-            It is assumed that the main image was stored before, the common subdirectory must exist.
-        :return:
-        """
-        folder, ndx_in_folder = self.address_for_id(img_id)
-        # We force thumbnail format to JPEG
-        sub_path = "%s/%s_mini.jpg" % (
-            folder,
-            ndx_in_folder,
-        )  # TODO: Dup with Image.thumb_img_from_id_if_there
-        return sub_path, self.path.joinpath(sub_path).as_posix()
+    # def thumbnail_paths(self, img_id: int) -> Tuple[str, str]:
+    #     """
+    #         Return relative and absolute paths to a thumbnail image.
+    #         It is assumed that the main image was stored before, the common subdirectory must exist.
+    #     :return:
+    #     """
+    #     folder, ndx_in_folder = self.address_for_id(img_id)
+    #     # We force thumbnail format to JPEG
+    #     sub_path = "%s/%s_mini.jpg" % (
+    #         folder,
+    #         ndx_in_folder,
+    #     )  # TODO: Dup with Image.thumb_img_from_id_if_there
+    #     return sub_path, self.path.joinpath(sub_path).as_posix()
