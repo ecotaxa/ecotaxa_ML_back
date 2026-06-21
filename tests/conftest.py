@@ -6,6 +6,3 @@ from config_fixture import *
 
 # noinspection PyUnresolvedReferences
 from db_fixture import *
-
-# noinspection PyUnresolvedReferences
-from tstlogs_fixture import *

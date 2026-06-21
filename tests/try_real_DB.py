@@ -2,10 +2,10 @@
 # If you have access to an EcoTaxa test environment, present scripts allows
 # a programmatic classification with current codebase.
 #
+import logging
 import os
 import sys
 import time
-import logging
 from unittest.mock import patch
 
 from config_fixture import HERE

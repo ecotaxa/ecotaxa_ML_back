@@ -40,7 +40,6 @@ def is_port_opened(host: str, port: int):
     return result == 0
 
 
-
 DB_NAME = "ecotaxa"
 DB_PASSWORD = "postgres12"
 
@@ -145,6 +144,7 @@ class EcoTaxaDBFrom0(object):
         # Load the configuration from the file we just wrote
         environ["APP_CONFIG"] = str(self.conf_file)
         from helpers.AppConfig import Config
+
         app_config = Config()
 
         def drop(user: str = "postgres", password: str = "", db_name: str = ""):
@@ -160,7 +160,7 @@ class EcoTaxaDBFrom0(object):
                 super_conn.exec_outside_transaction(db_create_sql)
             except:
                 pass
-            
+
         def pg_build():
             conn = Service.build_connection(app_config)
             conn.exec_outside_transaction("CREATE EXTENSION IF NOT EXISTS vector;")
