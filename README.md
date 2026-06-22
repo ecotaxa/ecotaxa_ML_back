@@ -30,3 +30,4 @@ The primary ML pipeline implemented here includes:
 - **Classification**: Training Random Forest classifiers on labeled data and predicting classes for unlabeled images.
 
 For more details on the ML process, see [src/ML/README.md](src/ML/README.md).
+For development setup, see [README_dev.md](README_dev.md).
