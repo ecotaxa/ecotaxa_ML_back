@@ -18,8 +18,8 @@ cd ecotaxa_ML_back
 
 ### 2. Create a virtual environment
 ```bash
-python3.8 -m venv .venv
-source .venv/bin/activate
+python3.8 -m venv venv38
+source venv38/bin/activate
 ```
 
 ### 3. Install dependencies
@@ -77,7 +77,7 @@ To generate a coverage report:
 ```bash
 pytest --cov=src --cov-report=html
 ```
-The report will be available in the `htmlcov/` directory (if configured).
+The report will be available in the `htmlcov/` directory.
 
 ## Continuous Integration and Delivery
 

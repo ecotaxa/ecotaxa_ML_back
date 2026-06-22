@@ -77,7 +77,7 @@ class Vault(object):
         """
         is_there = img_maybe.exists()
         if not is_there:
-            import requests # type: ignore
+            import requests  # type: ignore
             import tempfile
             from os import unlink
 
@@ -132,7 +132,7 @@ class Vault(object):
         """
         full_path = self.path.joinpath(img_sub_path)
         # For devs. DO NOT COMMIT
-        self.ensure_there(full_path, img_sub_path)
+        # self.ensure_there(full_path, img_sub_path)
         # self.image_from_bkp(full_path, img_sub_path)
         return full_path.as_posix()
 

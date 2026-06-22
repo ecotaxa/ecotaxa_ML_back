@@ -82,8 +82,7 @@ Output: a chosen number (currently 50) of new features, ordered in decreasing or
 
 ## Step 3: Extract deep features
 
-This is done in EcoTaxa, currently the first time that the user wants to use the deep features of a set of images. Could
-also be done right after import when the deep feature extractor has been chosen.
+This is done in EcoTaxa, currently the first time that the user wants to use the deep features of a set of images. It can be triggered by the `use_scn` flag in the prediction request.
 
 The process is:
 
@@ -93,7 +92,7 @@ The process is:
 - feed the features to the dimensionality reducer
 - store the resulting, reduced and ordered features
 
-The feature extractor + dimensionality reducer are a "network" (currently called SCN network). The old ones are not
+The feature extractor + dimensionality reducer are a "network" (sometimes called SCN network). The old ones are not
 compatible anymore. We will produce new ones based on the work of Thelma.
 
 ## Step 4: Train classifier

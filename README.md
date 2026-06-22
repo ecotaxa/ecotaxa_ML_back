@@ -20,7 +20,7 @@ This project does not provide a direct REST API for users. Instead, it interacts
 
 1.  **Shared Database**: It connects to the same PostgreSQL database as the main EcoTaxa backend.
 2.  **Job Queue**: It monitors the `job` table in the database for tasks of specific types (e.g., `Prediction`).
-3.  **GPU Job Runner**: The `gpu_jobs_runner.py` script acts as a background worker. It polls the database for pending jobs that require GPU acceleration, executes them, and updates their status and results directly in the database.
+3.  **Job Runner**: The `ml_jobs_runner.py` script acts as a background worker. It polls the database for pending jobs that require GPU acceleration, executes them, and updates their status and results directly in the database.
 
 ## Key Operations
 
