@@ -109,7 +109,7 @@ python src/ml_jobs_runner.py
 ## Docker Development
 
 If you prefer using Docker, there are helper scripts in the `docker/` directory:
-- `docker/run_ml_docker_dev.sh`: Run the development environment in a container.
-- `docker/run_ml_docker_dev_src.sh`: Run with the source code mounted for live changes.
+- `docker/run_ml_docker.sh`: Run the published images in a container.
+- `docker/run_ml_docker_dev.sh`: Run a local docker image for testing purposes.
 
 **Note:** These scripts are provided as examples and contain hardcoded paths to local, unversioned files (like `config.ini` and data volumes). You will likely need to adjust the `--mount` paths in these scripts to match your local environment before using them.
