@@ -31,6 +31,8 @@ def main():
             sce._run_one()
 
         if os.environ.get("ONE_SHOT"):
+            if JobSchedulerClass.the_runner is None:
+                print("WARNING: Nothing to do in one shot mode")
             break
 
         time.sleep(10)
