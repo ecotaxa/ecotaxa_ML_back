@@ -7,11 +7,11 @@
 # - Use selected features on source projects to train a Random Forest classifier
 # - Use the trained classifier on the target project.
 #
+from collections import Counter
 from typing import Dict, List, Tuple, Any
 
 import numpy as np
 
-from API_models.filters import ProjectFiltersDict
 from BO.Classification import ClassifIDListT
 from BO.ObjectSet import DescribedObjectSet, EnumeratedObjectSet
 from BO.Prediction import DeepFeatures
@@ -205,6 +205,10 @@ In second step 'Choice of Learning Set categories and size', where the learning 
         classif_ids = [
             req.pre_mapping.get(classif_id, classif_id) for classif_id in classif_ids
         ]
+        logger.info(
+            "Distribution of objects in learning set: %s",
+            dict(Counter(classif_ids).most_common()),
+        )
 
         return clean_np_features, classif_ids, used_features, np_medians_per_feat
 
