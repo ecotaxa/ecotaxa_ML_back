@@ -40,3 +40,16 @@ def test_prediction_job(database):
     with Service() as sce:
         job.job_id = create_DB_job(sce.session, job.JOB_TYPE, 1, job.init_args({}))
     job.do_background()
+
+
+def test_prediction_req_normalizes_pre_mapping_keys_and_values():
+    req = PredictionReq(
+        project_id=1,
+        source_project_ids=[2],
+        features=["fre.area"],
+        pre_mapping={"30815": "1001", 85069: 1002, "bad": "x"},
+    )
+
+    assert req.pre_mapping[30815] == 1001
+    assert req.pre_mapping[85069] == 1002
+    assert "bad" not in req.pre_mapping

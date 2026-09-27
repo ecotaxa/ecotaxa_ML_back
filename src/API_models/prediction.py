@@ -17,7 +17,14 @@ class PredictionReq:
         self.features: List[str] = kwargs.get("features", [])
         self.categories: List[int] = kwargs.get("categories", [])
         self.use_scn: bool = kwargs.get("use_scn", False)
-        self.pre_mapping: Dict[int, int] = kwargs.get("pre_mapping", {})
+        raw_pre_mapping = kwargs.get("pre_mapping") or {}
+        normalized_pre_mapping: Dict[int, int] = {}
+        for src, dst in raw_pre_mapping.items():
+            try:
+                normalized_pre_mapping[int(src)] = int(dst)
+            except (TypeError, ValueError):
+                continue
+        self.pre_mapping = normalized_pre_mapping
 
     def dict(self):
         return self.__dict__
