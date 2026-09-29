@@ -18,6 +18,7 @@ class PredictionReq:
         self.categories: List[int] = kwargs.get("categories", [])
         self.use_scn: bool = kwargs.get("use_scn", False)
         raw_pre_mapping = kwargs.get("pre_mapping") or {}
+        # We receive a dict decoded from JSON, and all keys are strings in JSON world
         normalized_pre_mapping: Dict[int, int] = {}
         for src, dst in raw_pre_mapping.items():
             try:
