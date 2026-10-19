@@ -73,6 +73,7 @@ class GPUPredictForProject(PredictForProject):
             used_features,
             np_medians_per_feat,
         ) = self.build_learning_set(req)
+        self.ro_session.rollback()
         ls_size = np_feature_vals.shape[0]
         if ls_size > self.MAX_LEARNING_SET_SIZE:
             self.report_ls_too_large(ls_size)
@@ -323,6 +324,7 @@ In second step 'Choice of Learning Set categories and size', where the learning 
         """
         # Get data i.e objects ID and images from the project
         ids_and_images = DeepFeatures.find_missing(self.ro_session, proj_id)
+        self.ro_session.rollback()
         if len(ids_and_images) == 0:
             return "All CNN present for %d" % proj_id
         # Do reasonable chunks so we can see logs...
