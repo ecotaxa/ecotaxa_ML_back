@@ -276,6 +276,10 @@ In second step 'Choice of Learning Set categories and size', where the learning 
             np_chunk = FeatureConsistentProjectSet.np_read(
                 tgt_res, self.CHUNK_SIZE, features, obj_ids, unused, np_medians_per_feat
             )
+            if len(obj_ids) == 0:
+                # Nothing left to classify: either the target set is empty, or the
+                # previous chunk was exactly CHUNK_SIZE long.
+                break
             if self.req.use_scn:
                 np_deep_features_chunk = DeepFeatures.np_read_for_objects(
                     self.ro_session, obj_ids
