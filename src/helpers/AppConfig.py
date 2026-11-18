@@ -3,7 +3,7 @@
 # Copyright (C) 2015-2022  Picheral, Colin, Irisson (UPMC-CNRS)
 #
 #
-# Application configuration, in a file, pointed at with an env. variable
+# Application configuration, in a file, pointed at with an env. variable. Or fully from env or defaults.
 #
 
 import configparser
@@ -148,8 +148,8 @@ class Config(object):
     #     # TODO: stop using so we can enumerate the keys
     #     return self._get(key, default)
 
-    def list_cnf(self) -> KeysView[str]:
-        return self.parser.keys()
+    # def list_cnf(self) -> KeysView[str]:
+    #     return self.parser.keys()
 
     # def get_max_captcha_token_length(self) -> int:
     #     return int(self._get("MAX_CAPTCHA_TOKEN_LENGTH", "4096"))
