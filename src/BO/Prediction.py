@@ -23,6 +23,7 @@ from DB.CNNFeatureVector import (
 )
 from DB.Image import Image
 from DB.helpers import Session, Result
+from DB.helpers.Postgres import pg_insert, PgInsert
 from helpers.DynamicLogs import get_logger
 
 logger = get_logger(__name__)
@@ -97,21 +98,29 @@ class DeepFeatures(object):
         return ret
 
     @classmethod
+    def _insert_bulk(cls, session: Session, bulks: List[Dict[str, Any]]) -> int:
+        ins_qry: PgInsert = pg_insert(ObjectCNNFeatureVector.__table__).values(bulks)
+        ins_qry = ins_qry.on_conflict_do_nothing(index_elements=["objcnnid"])
+        res: Result = session.execute(ins_qry)
+        return res.rowcount  # type: ignore
+
+    @classmethod
     def save(cls, session: Session, features: Any) -> int:
         """
-        Insert CNN features to DB.
+        Insert CNN features to DB, ignoring already-present objects.
         Features is an iterable dict-like, a pandas dataframe for the moment.
         """
+        seen_rows = 0
         nb_rows = 0
         bulks = []
         for obj_id, row in features.iterrows():
             bulks.append({"objcnnid": obj_id, "features": row.tolist()})
-            nb_rows += 1
-            if nb_rows % cls.SAVE_EVERY == 0:
-                session.execute(ObjectCNNFeatureVector.__table__.insert(), bulks)
+            seen_rows += 1
+            if seen_rows % cls.SAVE_EVERY == 0:
+                nb_rows += cls._insert_bulk(session, bulks)
                 bulks = []
         if bulks:
-            session.execute(ObjectCNNFeatureVector.__table__.insert(), bulks)
+            nb_rows += cls._insert_bulk(session, bulks)
         return nb_rows
 
     @classmethod

@@ -66,3 +66,38 @@ def test_cnn_features_storage(database):
     with Service() as sce:
         with pytest.raises(AssertionError):
             DeepFeatures.np_read_for_objects(sce.session, obj_ids)
+
+
+def test_cnn_features_save_idempotent(database):
+    prj_id = 1
+    with Service() as sce:
+        ret = DeepFeatures.find_missing(sce.session, prj_id)
+        assert len(ret) == OBJECTS_IN_PROJECT
+        obj_ids = list(ret.keys())
+
+    features = [[(i + 1) * 0.1] * 50 for i in range(len(obj_ids))]
+    features_df = pd.DataFrame(features, index=obj_ids)
+    partial_df = features_df.iloc[:2]
+
+    # Insert a subset first (simulating another prediction job on a shared source project)
+    with Service() as sce:
+        n_first = DeepFeatures.save(sce.session, partial_df)
+        assert n_first == len(partial_df)
+        sce.session.commit()
+
+    # Saving the full set again must be idempotent and not raise UniqueViolation
+    with Service() as sce:
+        n_second = DeepFeatures.save(sce.session, features_df)
+        assert n_second == OBJECTS_IN_PROJECT - len(partial_df)
+        sce.session.commit()
+
+    # Saving the full set a third time inserts 0 new rows
+    with Service() as sce:
+        n_third = DeepFeatures.save(sce.session, features_df)
+        assert n_third == 0
+        sce.session.commit()
+
+    # All features are readable and intact
+    with Service() as sce:
+        ret_feats = DeepFeatures.np_read_for_objects(sce.session, obj_ids)
+        assert (ret_feats == np.array(features, dtype="float32")).all()

@@ -3,6 +3,10 @@ import os
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
+import pytest
+from psycopg2.errors import DeadlockDetected, UniqueViolation
+from sqlalchemy.exc import IntegrityError, OperationalError
+
 from API_models.filters import ProjectFiltersDict
 from API_models.prediction import PredictionReq
 from API_operations.helpers.Service import Service
@@ -98,3 +102,77 @@ def test_prediction_req_normalizes_pre_mapping_keys_and_values():
     assert req.pre_mapping[30815] == 1001
     assert req.pre_mapping[85069] == 1002
     assert "bad" not in req.pre_mapping
+
+
+@pytest.mark.parametrize("orig_exc", [UniqueViolation(), DeadlockDetected()])
+def test_classify_conflict_rolls_back_and_sets_job_error(monkeypatch, orig_exc):
+    job = GPUPredictForProject.__new__(GPUPredictForProject)
+    job.CHUNK_SIZE = 2
+    job.req = SimpleNamespace(use_scn=False, project_id=1)
+    job.ro_session = MagicMock()
+    job.session = MagicMock()
+    job.update_progress = MagicMock()
+    job.set_job_result = MagicMock()
+
+    tgt_res = _FakeResult([(1, None, 1.0), (2, None, 2.0), (3, None, 3.0)])
+    classifier = MagicMock()
+    classifier.predict_all.return_value = ([1, 1], [1.0, 1.0])
+
+    err_cls = (
+        IntegrityError if isinstance(orig_exc, UniqueViolation) else OperationalError
+    )
+    db_err = err_cls("stmt", {}, orig_exc)
+
+    target_obj_set = MagicMock()
+    target_obj_set.classify_auto_mult.side_effect = [
+        (2, {}),
+        db_err,
+    ]
+    monkeypatch.setattr(
+        "API_operations.GPU_Prediction.EnumeratedObjectSet",
+        MagicMock(return_value=target_obj_set),
+    )
+    update_stats_mock = MagicMock()
+    monkeypatch.setattr(
+        "API_operations.GPU_Prediction.ProjectBO.update_taxo_stats",
+        update_stats_mock,
+    )
+
+    ret = job.classify(MagicMock(), tgt_res, classifier, ["fre.area"], {})
+
+    assert ret is None
+    job.session.commit.assert_called_once()
+    job.session.rollback.assert_called_once()
+    update_stats_mock.assert_not_called()
+    job.set_job_result.assert_called_once()
+    kwargs = job.set_job_result.call_args.kwargs
+    assert kwargs["errors"] == ["Another prediction runs on same data"]
+    assert kwargs["infos"] == {"status": "error", "rowcount": 2}
+
+
+def test_classify_reraises_non_conflict_db_error(monkeypatch):
+    job = GPUPredictForProject.__new__(GPUPredictForProject)
+    job.CHUNK_SIZE = 2
+    job.req = SimpleNamespace(use_scn=False, project_id=1)
+    job.ro_session = MagicMock()
+    job.session = MagicMock()
+    job.update_progress = MagicMock()
+    job.set_job_result = MagicMock()
+
+    tgt_res = _FakeResult([(1, None, 1.0)])
+    classifier = MagicMock()
+    classifier.predict_all.return_value = ([1], [1.0])
+
+    target_obj_set = MagicMock()
+    target_obj_set.classify_auto_mult.side_effect = OperationalError(
+        "stmt", {}, RuntimeError("connection lost")
+    )
+    monkeypatch.setattr(
+        "API_operations.GPU_Prediction.EnumeratedObjectSet",
+        MagicMock(return_value=target_obj_set),
+    )
+
+    with pytest.raises(OperationalError):
+        job.classify(MagicMock(), tgt_res, classifier, ["fre.area"], {})
+
+    job.set_job_result.assert_not_called()

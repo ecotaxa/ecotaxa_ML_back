@@ -378,6 +378,7 @@ class ProjectBO(object):
     def update_taxo_stats(session: Session, projid: int):
         sql = text(
             f"""
+        SELECT 1 FROM projects WHERE projid = :prjid FOR UPDATE;
         DELETE FROM projects_taxo_stat pts
          WHERE pts.projid = :prjid;
         INSERT INTO projects_taxo_stat(projid, id, nbr, nbr_v, nbr_d, nbr_p)

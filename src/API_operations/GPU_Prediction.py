@@ -8,9 +8,11 @@
 # - Use the trained classifier on the target project.
 #
 from collections import Counter
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple, Any, Optional
 
 import numpy as np
+from psycopg2.errors import UniqueViolation, DeadlockDetected
+from sqlalchemy.exc import IntegrityError, OperationalError
 
 from BO.Classification import ClassifIDListT
 from BO.ObjectSet import DescribedObjectSet, EnumeratedObjectSet
@@ -91,6 +93,8 @@ class GPUPredictForProject(PredictForProject):
         nb_rows = self.classify(
             training, target_result, classifier, used_features, np_medians_per_feat
         )
+        if nb_rows is None:
+            return
 
         final_message = "New category set on %d objects." % nb_rows
         self.update_progress(100, final_message)
@@ -263,7 +267,7 @@ In second step 'Choice of Learning Set categories and size', where the learning 
         classifier: OurRandomForestClassifier,
         features: List[str],
         np_medians_per_feat: Dict[str, float],
-    ) -> int:
+    ) -> Optional[int]:
         """
         Do the classification job itself, read lines from the DB, classify them and write-back the result.
         """
@@ -288,13 +292,28 @@ In second step 'Choice of Learning Set categories and size', where the learning 
             logger.info("One chunk of %d", len(obj_ids))
             list_classif_ids, list_scores = classifier.predict_all(np_chunk)
             target_obj_set = EnumeratedObjectSet(self.session, obj_ids)
-            nb_upd, all_changes = target_obj_set.classify_auto_mult(
-                training, list_classif_ids, list_scores
-            )
-            nb_changes += nb_upd
-            logger.info("Changes :%s", str(all_changes)[:1000])
-            training.advance()
-            self.session.commit()
+            try:
+                nb_upd, all_changes = target_obj_set.classify_auto_mult(
+                    training, list_classif_ids, list_scores
+                )
+                nb_changes += nb_upd
+                logger.info("Changes :%s", str(all_changes)[:1000])
+                training.advance()
+                self.session.commit()
+            except (IntegrityError, OperationalError) as e:
+                if not isinstance(e.orig, (UniqueViolation, DeadlockDetected)):
+                    raise
+                logger.warning(
+                    "Concurrent modification conflict during classification after %d changes: %s",
+                    nb_changes,
+                    e,
+                )
+                self.session.rollback()
+                self.set_job_result(
+                    errors=["Another prediction runs on same data"],
+                    infos={"status": "error", "rowcount": nb_changes},
+                )
+                return None
             if len(obj_ids) < self.CHUNK_SIZE:
                 break
             done_count += len(obj_ids)
