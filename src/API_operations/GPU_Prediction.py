@@ -22,7 +22,7 @@ from BO.ProjectSet import LimitedInCategoriesProjectSet, FeatureConsistentProjec
 from BO.Rights import RightsBO, Action
 from BO.Training import TrainingBO
 from DB.Object import ObjectIDListT
-from DB.Project import ProjectIDT, Project
+from DB.Project import Project
 from DB.helpers import Result
 from DB.helpers.Direct import text
 from DB.helpers.SQL import SelectClause
@@ -335,18 +335,27 @@ In second step 'Choice of Learning Set categories and size', where the learning 
         """
         model_name = tgt_project.cnn_network_id
         assert model_name, "Target project has no cnn_network_id"
-        for a_projid in [tgt_project.projid] + self.req.source_project_ids:
-            diag = self._ensure_deep_features_for(a_projid, model_name)
+        src_projects: List[Project] = []
+        if self.req.source_project_ids:
+            src_projects = (
+                self.ro_session.query(Project)
+                .filter(Project.projid.in_(self.req.source_project_ids))
+                .all()
+            )
+            self.ro_session.rollback()
+        for a_project in [tgt_project] + src_projects:
+            diag = self._ensure_deep_features_for(a_project, model_name)
             logger.info(diag)
 
     DEEP_EXTRACT_CHUNK = 10000
 
-    def _ensure_deep_features_for(self, proj_id: ProjectIDT, model_name: str) -> str:
+    def _ensure_deep_features_for(self, project: Project, model_name: str) -> str:
         """
         Ensure that deep features are present for given project.
         """
+        proj_id = project.projid
         # Get data i.e objects ID and images from the project
-        ids_and_images = DeepFeatures.find_missing(self.ro_session, proj_id)
+        ids_and_images = DeepFeatures.find_missing(self.ro_session, project)
         self.ro_session.rollback()
         if len(ids_and_images) == 0:
             return "All CNN present for %d" % proj_id

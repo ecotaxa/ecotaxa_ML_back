@@ -7,12 +7,12 @@
 # A prediction is the output of an automatic classification process.
 #    This is heavily based on machine learning algorithms.
 #
-from typing import Any, List, Dict, ClassVar
+from typing import Any, List, Dict, ClassVar, Optional
 
 import numpy as np
 from sqlalchemy import text, and_
 
-from DB.Project import ProjectIDT
+from DB.Project import Project
 from DB.Object import ObjectIDT, ObjectHeader
 # from DB.Acquisition import Acquisition
 # from DB.Sample import Sample
@@ -64,7 +64,7 @@ class DeepFeatures(object):
 
     @staticmethod
     def find_missing(
-        session: Session, proj_id: ProjectIDT, fast: bool = False
+        session: Session, project: Project, fast: bool = False
     ) -> Dict[ObjectIDT, str]:
         """
         Find missing cnn features for this project.
@@ -87,14 +87,22 @@ class DeepFeatures(object):
             # We don't need the whole list to check that some are missing
             sql += " LIMIT 10"
 
-        res: Result = session.execute(text(sql), {"proj_id": proj_id})
-        ret = {}
+        position = 1 if project.cnn_image_position is None else project.cnn_image_position
+        assert position >= 1, "cnn_image_position must be >= 1, got %d" % position
+
+        res: Result = session.execute(text(sql), {"proj_id": project.projid})
+        ret: Dict[ObjectIDT, str] = {}
+        prev_objid: Optional[ObjectIDT] = None
+        pos = 0
         for objid, imgid, orig_file_name in res:
             assert imgid is not None, "Object %d has no image in DB" % objid
-            if objid not in ret:
+            if objid != prev_objid:
+                prev_objid = objid
+                pos = 1
+            else:
+                pos += 1
+            if pos == position:
                 ret[objid] = Image.img_from_id_and_orig(imgid, orig_file_name)
-            else:  # Only pick the first image
-                pass
         return ret
 
     @classmethod

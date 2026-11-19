@@ -7,8 +7,10 @@ from __future__ import annotations
 from typing import List, TYPE_CHECKING, Iterable
 
 from BO.DataLicense import AccessLevelEnum
+
 # from BO.DataLicense import AccessLevelEnum
 from DB.helpers.ORM import Model
+
 # from .Instrument import Instrument
 from .helpers.DDL import Column, Sequence, ForeignKey
 from .helpers.ORM import relationship
@@ -41,7 +43,7 @@ class Project(Model):
     instrument_id: str = Column(
         VARCHAR(32),
         # ForeignKey(Instrument.instrument_id),
-        nullable=False
+        nullable=False,
     )
     access = Column(VARCHAR(1), default=AccessLevelEnum.OPEN, nullable=False)
     status = Column(
@@ -71,6 +73,8 @@ class Project(Model):
     fileloaded = Column(VARCHAR)
     rf_models_used = Column(VARCHAR)
     cnn_network_id = Column(VARCHAR(50))
+    # Use image as this position (following imgrank)
+    cnn_image_position = Column(INTEGER, nullable=True)
     # project specific formulae used to calculate concentration and biovolume ( used in project summary export, and collection DarwinCore export)
     formulae = Column(VARCHAR)
     # Associated taxonomy statistics. Commented out to avoid that the ORM loads the whole list, which can be big.

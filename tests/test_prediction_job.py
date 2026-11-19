@@ -176,3 +176,64 @@ def test_classify_reraises_non_conflict_db_error(monkeypatch):
         job.classify(MagicMock(), tgt_res, classifier, ["fre.area"], {})
 
     job.set_job_result.assert_not_called()
+
+
+def test_ensure_deep_features_passes_project_orm_objects(monkeypatch):
+    from DB.Project import Project
+
+    job = GPUPredictForProject.__new__(GPUPredictForProject)
+    job.req = SimpleNamespace(source_project_ids=[2, 3])
+    src_prj_2 = Project(projid=2, title="Src 2", instrument_id="Zooscan")
+    src_prj_3 = Project(projid=3, title="Src 3", instrument_id="Zooscan")
+    tgt_prj = Project(
+        projid=1,
+        title="Target",
+        instrument_id="Zooscan",
+        cnn_network_id="SCN_zooscan_group1",
+    )
+
+    qry = MagicMock()
+    qry.filter.return_value.all.return_value = [src_prj_2, src_prj_3]
+    job.ro_session = MagicMock()
+    job.ro_session.query.return_value = qry
+
+    called_with = []
+
+    def fake_ensure_for(project, model_name):
+        called_with.append((project, model_name))
+        return f"OK for {project.projid}"
+
+    monkeypatch.setattr(job, "_ensure_deep_features_for", fake_ensure_for)
+
+    job.ensure_deep_features(tgt_prj)
+
+    assert called_with == [
+        (tgt_prj, "SCN_zooscan_group1"),
+        (src_prj_2, "SCN_zooscan_group1"),
+        (src_prj_3, "SCN_zooscan_group1"),
+    ]
+    job.ro_session.query.assert_called_once_with(Project)
+    job.ro_session.rollback.assert_called_once()
+
+
+def test_ensure_deep_features_for_accepts_project_orm_object(monkeypatch):
+    from DB.Project import Project
+
+    job = GPUPredictForProject.__new__(GPUPredictForProject)
+    job.ro_session = MagicMock()
+    job.session = MagicMock()
+    job.vault = MagicMock()
+    job.models_dir = MagicMock()
+
+    prj = Project(projid=42, title="Test", instrument_id="Zooscan")
+    find_missing_mock = MagicMock(return_value={})
+    monkeypatch.setattr(
+        "API_operations.GPU_Prediction.DeepFeatures.find_missing",
+        find_missing_mock,
+    )
+
+    diag = job._ensure_deep_features_for(prj, "SCN_zooscan_group1")
+
+    assert diag == "All CNN present for 42"
+    find_missing_mock.assert_called_once_with(job.ro_session, prj)
+    job.ro_session.rollback.assert_called_once()
