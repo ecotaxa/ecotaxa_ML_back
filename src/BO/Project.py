@@ -6,16 +6,17 @@
 # from datetime import datetime
 # from enum import Enum
 from typing import (
-#     List,
+    #     List,
     Dict,
-#     Any,
-#     Iterable,
-#     Optional,
-#     Union,
-#     Tuple,
-#     cast,
-#     Final,
+    #     Any,
+    #     Iterable,
+    #     Optional,
+    #     Union,
+    #     Tuple,
+    #     cast,
+    #     Final,
 )
+
 #
 # from BO.Classification import ClassifIDListT
 # from BO.Collection import MinimalCollectionBO
@@ -43,10 +44,11 @@ from DB.Object import (
     VALIDATED_CLASSIF_QUAL,
     PREDICTED_CLASSIF_QUAL,
     DUBIOUS_CLASSIF_QUAL,
-#     ObjectsClassifHisto,
-#     ObjectHeader,
-#     ObjectFields,
+    #     ObjectsClassifHisto,
+    #     ObjectHeader,
+    #     ObjectFields,
 )
+
 # from DB.Process import Process
 # from DB.Project import (
 #     ProjectIDT,
@@ -62,9 +64,11 @@ from DB.Object import (
 # from DB.Sample import Sample
 # from DB.User import Role, User, UserStatus, UserIDT, UserIDListT
 from DB.helpers import Session, Result
+
 # from DB.helpers.Core import select
 from DB.helpers.Direct import text
 from DB.helpers.Hints import RECURS_HINT
+
 # from DB.helpers.ORM import (
 #     Delete,
 #     Query,
@@ -378,7 +382,7 @@ class ProjectBO(object):
     def update_taxo_stats(session: Session, projid: int):
         sql = text(
             f"""
-        SELECT 1 FROM projects WHERE projid = :prjid FOR UPDATE;
+        SELECT 1 FROM projects WHERE projid = :prjid FOR NO KEY UPDATE;
         DELETE FROM projects_taxo_stat pts
          WHERE pts.projid = :prjid;
         INSERT INTO projects_taxo_stat(projid, id, nbr, nbr_v, nbr_d, nbr_p)
@@ -399,6 +403,7 @@ class ProjectBO(object):
         GROUP BY sam.projid, obh.classif_id;"""
         )
         session.execute(sql, {"prjid": projid})
+
 
 #     @staticmethod
 #     def update_stats(session: Session, projid: int):
